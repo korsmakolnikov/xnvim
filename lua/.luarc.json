@@ -1,0 +1,7 @@
+{
+    "diagnostics.globals": [
+        "cst_formatting",
+        "use",
+        "vim"
+    ]
+}
