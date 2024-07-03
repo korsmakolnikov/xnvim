@@ -2,8 +2,10 @@
 
 TODO:
 [X] Fix warnings  
+[ ] Fix treesitter plugin (it install all the parser every time
+[ ] Fix swift formatters, warnings and errors
 [ ] Refactor for layers  
-[ ] gloabl options module  
+[ ] global options module  
 [ ] packer setup module  
 [ ] refactor bindings to be semantically aligned with vim's feature ("b" for "buffers" "w" for "window"[...])  
 [ ] fix comment (TODO) highlighting. It is highlighted for a moment then it turns gray  
