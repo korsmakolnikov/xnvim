@@ -46,7 +46,7 @@ require 'nvim-treesitter.configs'.setup {
     "vim",
     "vimdoc",
     "xml",
-  }, -- only install parsers for elixir and heex
+  },
   -- ensure_installed = "all", -- install parsers for all supported languages
   sync_install = false,
   ignore_install = {},

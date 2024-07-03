@@ -202,3 +202,13 @@ require 'lspconfig.configs'.fennel_language_server = {
 }
 
 require 'coding.custom_formatters'.init()
+
+require 'lspconfig'.sourcekit.setup({
+  capabilities = {
+    workspace = {
+      didChangeWatchedFiles = {
+        dynamicRegistration = true,
+      },
+    },
+  }
+})

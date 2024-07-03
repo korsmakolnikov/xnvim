@@ -31,7 +31,10 @@ m.init_with_package_manager = function()
 end
 
 m.init_transpiler = function()
+  local nvim_dir = vim.fn.stdpath [[config]]
+
   require 'tangerine'.setup {
+    target   = nvim_dir .. "/lua/compiled",
     compiler = {
       verbose = false,
       hooks = { "onsave", "oninit" }
