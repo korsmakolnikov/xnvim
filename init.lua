@@ -1,5 +1,6 @@
 -- Bootstrap lazy.nvim and tangerine transpiler
 local init_layer = require 'init_layer'
+-- it doesn't work if you delete tangerine directory
 init_layer
     .bootstrap("https://github.com/udayvir-singh/tangerine.nvim")
     .init_transpiler()

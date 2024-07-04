@@ -1,6 +1,7 @@
 # NVIM dot files
 
 TODO:
+[ ] Fix tangerine and lazy setup
 [X] Fix warnings  
 [ ] Fix treesitter plugin (it install all the parser every time  
 [X] Fix swift formatters, warnings and errors  
