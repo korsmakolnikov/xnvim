@@ -3,8 +3,8 @@ local cmp = require 'cmp'
 cmp.setup({
   snippet = {
     expand = function(args)
-      require('snippy').expand_snippet(args.body) -- For `snippy` users.
-    end,
+      require 'snippy'.expand_snippet(args.body)
+    end
   },
   window = {
     completion = cmp.config.window.bordered(),
@@ -20,12 +20,20 @@ cmp.setup({
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   }),
   sources = cmp.config.sources({
-    -- { name = 'snippy' },
+    {
+      name = 'buffer',
+      option = {
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end
+      }
+    },
+    { name = 'snippy' },
     { name = 'nvim_lsp' },
-    -- {
-    --   name = "buffer-lines",
-    --   option = { line_numbers = true, line_number_separator = ":", max_size = 0 } -- disabled due to a formatting issue with the size of the succestion
-    -- },
+    {
+      name = "buffer-lines",
+      option = { line_numbers = true, line_number_separator = ":", max_size = 0 } -- disabled due to a formatting issue with the size of the succestion
+    },
     { name = 'treesitter' },
     {
       name = "spell",
@@ -37,7 +45,7 @@ cmp.setup({
         preselect_correct_word = true,
       },
     },
-    -- { name = 'buffer' },
+    { name = 'nvim_lua' },
   }),
   formatting = {
     format = function(entry, vim_item)
@@ -70,8 +78,8 @@ require "cmp".setup.cmdline({ "/", "?" }, {
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
+    { name = 'path' },
+    { name = 'cmdline_history' },
     { name = 'cmdline' }
   })
 })
@@ -80,7 +88,6 @@ cmp.setup.cmdline(':', {
 cmp.setup.filetype('gitcommit', {
   sources = cmp.config.sources({
     { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-  }, {
     { name = 'buffer' },
   })
 })
