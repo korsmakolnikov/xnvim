@@ -72,11 +72,9 @@ vim.opt.spelllang = { "en_us", "it" }
 _G.Original_folder = vim.loop.cwd()
 
 require "visual.theme"
-require 'lualine.themes.gruvbox-material'
+-- require 'lualine.themes.gruvbox-material'
 require "nvim_comment".setup()
 require "bufferline".setup()
--- require "zen-mode".setup()
--- require "twilight".setup()
 
 require "neovide"
 require "oil_manager"
