@@ -203,12 +203,13 @@ require 'lspconfig.configs'.fennel_language_server = {
 
 require 'coding.custom_formatters'.init()
 
-require 'lspconfig'.sourcekit.setup({
-  capabilities = {
-    workspace = {
-      didChangeWatchedFiles = {
-        dynamicRegistration = true,
-      },
-    },
+local swift_capabilities = capabilities
+swift_capabilities.workspace = {
+  didChangeWatchedFiles = {
+    dynamicRegistration = true,
   }
+}
+
+require 'lspconfig'.sourcekit.setup({
+  capabilities = swift_capabilities
 })

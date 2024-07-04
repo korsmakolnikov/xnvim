@@ -20,11 +20,11 @@ return lazy.setup(
       "udayvir-singh/tangerine.nvim",
       "udayvir-singh/hibiscus.nvim",
       "nvim-lua/plenary.nvim",
-      { "neovim/nvim-lspconfig",          dependencies = { "folke/neodev.nvim", "lvimuser/lsp-inlayhints.nvim", "hrsh7th/nvim-cmp", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-path", "hrsh7th/cmp-buffer", "hrsh7th/cmp-vsnip", "hrsh7th/cmp-cmdline", "f3fora/cmp-spell", "ray-x/cmp-treesitter", "onsails/lspkind.nvim", "amarakon/nvim-cmp-buffer-lines", "nvim-lua/lsp-status.nvim" } },
+      { "neovim/nvim-lspconfig",          dependencies = { "folke/neodev.nvim", "lvimuser/lsp-inlayhints.nvim", "hrsh7th/nvim-cmp", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-path", "hrsh7th/cmp-buffer", "hrsh7th/cmp-vsnip", "hrsh7th/cmp-cmdline", "f3fora/cmp-spell", "ray-x/cmp-treesitter", "onsails/lspkind.nvim", "amarakon/nvim-cmp-buffer-lines", "nvim-lua/lsp-status.nvim", { "antosha417/nvim-lsp-file-operations", config = true } } },
       "nvim-treesitter/nvim-treesitter",
-      { "elixir-tools/elixir-tools.nvim", dependencies = { "nvim-lua/plenary.nvim" },                                                                                                                                                                                                                                                                                                tag = "stable" },
+      { "elixir-tools/elixir-tools.nvim", dependencies = { "nvim-lua/plenary.nvim" },                                                                                                                                                                                                                                                                                                                                                          tag = "stable" },
       { "folke/which-key.nvim",           lazy = false },
-      { "williamboman/mason.nvim",        dependencies = { "williamboman/mason-lspconfig.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" },                                                                                                                                                                                                                                       config = _1_ },
+      { "williamboman/mason.nvim",        dependencies = { "williamboman/mason-lspconfig.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" },                                                                                                                                                                                                                                                                                                 config = _1_ },
       "terrortylor/nvim-comment",
       { "nvim-neotest/neotest",     dependencies = { "nvim-neotest/nvim-nio", "nvim-lua/plenary.nvim", "antoinemadec/FixCursorHold.nvim", "nvim-treesitter/nvim-treesitter" } },
       "ray-x/go.nvim",
@@ -49,6 +49,6 @@ return lazy.setup(
       "junegunn/goyo.vim",
       { "folke/which-key.nvim",  config = _2_ },
       { "mfussenegger/nvim-dap", dependencies = { "rcarriga/nvim-dap-ui", "mxsdev/nvim-dap-vscode-js" } },
-      { "dcampos/nvim-snippy",   dependencies = { "honza/vim-snippets", "dcampos/cmp-snippy" } }
+      { "dcampos/nvim-snippy",   dependencies = { "honza/vim-snippets", "dcampos/cmp-snippy" } },
     }
   })

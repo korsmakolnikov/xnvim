@@ -42,6 +42,7 @@ require 'nvim-treesitter.configs'.setup {
     "rust",
     "sql",
     "starlark",
+    "swift",
     "toml",
     "vim",
     "vimdoc",
