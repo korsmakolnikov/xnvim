@@ -20,13 +20,13 @@ cmp.setup({
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   }),
   sources = cmp.config.sources({
+    -- { name = 'snippy' },
     { name = 'nvim_lsp' },
-    { name = 'snippy' },
+    -- {
+    --   name = "buffer-lines",
+    --   option = { line_numbers = true, line_number_separator = ":", max_size = 0 } -- disabled due to a formatting issue with the size of the succestion
+    -- },
     { name = 'treesitter' },
-    {
-      name = "buffer-lines",
-      option = { line_numbers = true, line_number_separator = ":", max_size = 0 } -- disabled due to a formatting issue with the size of the succestion
-    },
     {
       name = "spell",
       option = {
@@ -37,8 +37,7 @@ cmp.setup({
         preselect_correct_word = true,
       },
     },
-  }, {
-    { name = 'buffer' },
+    -- { name = 'buffer' },
   }),
   formatting = {
     format = function(entry, vim_item)
