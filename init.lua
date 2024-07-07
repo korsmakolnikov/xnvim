@@ -94,3 +94,5 @@ require "markdown"
 require "presentation"
 require "compiled.autogroups"
 require "gitlinker".setup()
+
+vim.cmd([[let g:conjure#filetype#fennel = "conjure.client.fennel.stdio"]])

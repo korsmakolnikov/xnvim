@@ -68,29 +68,22 @@ return lazy.setup(
       { "folke/which-key.nvim",  config = _2_ },
       { "mfussenegger/nvim-dap", dependencies = { "rcarriga/nvim-dap-ui", "mxsdev/nvim-dap-vscode-js" } },
       { "dcampos/nvim-snippy",   dependencies = { "honza/vim-snippets", "dcampos/cmp-snippy" } },
-      {
-        'nvimdev/dashboard-nvim',
-        event = 'VimEnter',
-        config = function()
-          require('dashboard').setup {
-            config = {
-              center = {
-                {
-                  icon = '',
-                  icon_hl = 'group',
-                  desc = 'description',
-                  desc_hl = 'group',
-                  key = 'shortcut key in dashboard buffer not keymap !!',
-                  key_hl = 'group',
-                  key_format = ' [%s]', -- `%s` will be substituted with value of `key`
-                  action = '',
-                },
-              },
-              footer = {},
-            }
-          }
-        end,
-        dependencies = { { 'nvim-tree/nvim-web-devicons' } }
-      }
+      -- It requires an update adding the template
+      -- TODO fork and add the template you need
+      -- {
+      --   'korsmakolnikov/conceal.nvim',
+      --   branch = 'lisp-templates',
+      --   dependencies = { 'nvim-tree/nvim-web-devicons' },
+      --   config = function()
+      --     local conceal = require 'conceal'
+      --     conceal.setup({})
+      --     conceal.generate_conceals()
+      --
+      --     vim.keymap.set("n", "<leader>tc", function()
+      --       require("conceal").toggle_conceal()
+      --     end, { silent = true })
+      --   end
+      -- },
+      { 'Olical/conjure' }
     }
   })

@@ -178,27 +178,37 @@ require("lsp-inlayhints").setup(inlay_hints_default_configuration)
 
 require 'lspconfig'.cmake.setup {}
 
-require 'lspconfig.configs'.fennel_language_server = {
-  default_config = {
-    cmd = { 'fennel-language-server' },
-    filetypes = { 'fennel' },
-    single_file_support = true,
-    -- source code resides in directory `fnl/`
-    root_dir = require 'lspconfig'.util.root_pattern("fnl"),
-    settings = {
-      fennel = {
-        workspace = {
-          -- If you are using hotpot.nvim or aniseed,
-          -- make the server aware of neovim runtime files.
-          library = vim.api.nvim_list_runtime_paths(),
-          checkThirdParty = false, -- THIS IS THE IMPORTANT LINE TO ADD
-        },
-        diagnostics = {
-          globals = { 'vim' },
-        },
-      },
-    },
-  },
+-- require 'lspconfig.configs'.fennel_language_server = {
+--   default_config = {
+--     cmd = { 'fennel-language-server' },
+--     filetypes = { 'fennel' },
+--     single_file_support = true,
+--     -- source code resides in directory `fnl/`
+--     root_dir = require 'lspconfig'.util.root_pattern("fnl"),
+--     settings = {
+--       fennel = {
+--         workspace = {
+--           -- If you are using hotpot.nvim or aniseed,
+--           -- make the server aware of neovim runtime files.
+--           library = vim.api.nvim_list_runtime_paths(),
+--           checkThirdParty = false, -- THIS IS THE IMPORTANT LINE TO ADD
+--         },
+--         diagnostics = {
+--           globals = { 'vim' },
+--         },
+--       },
+--     },
+--   },
+-- }
+--
+-- require 'lspconfig'.fennel_language_server.setup {
+--   capabilities = capabilities,
+--   flags = { debounce_text_changes = 150 },
+-- }
+--
+require 'lspconfig'.fennel_ls.setup {
+  capabilities = capabilities,
+  flags = { debounce_text_changes = 150 },
 }
 
 require 'coding.custom_formatters'.init()
