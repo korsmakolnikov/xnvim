@@ -10,7 +10,6 @@ local function _2_()
   return (require("which-key")).setup({ spelling = { enabled = true, suggestions = 20 } })
 end
 
-print("installing packages")
 return lazy.setup(
   {
     install = { colorscheme = { "habamax" } },
@@ -61,7 +60,6 @@ return lazy.setup(
       "blueshirts/darcula",
       "rakr/vim-one",
       "navarasu/onedark.nvim",
-      -- { "nvim-lualine/lualine.nvim", dependencies = { "kyazdani42/nvim-web-devicons" } },
       { "junegunn/fzf",          build = "./install --bin" },
       "ibhagwan/fzf-lua",
       "junegunn/goyo.vim",
@@ -91,6 +89,13 @@ return lazy.setup(
           }
         end,
         dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' }
+      },
+      {
+        'freddiehaddad/feline.nvim',
+        opts = {},
+        config = function()
+          require('feline').setup()
+        end
       }
     }
   })
