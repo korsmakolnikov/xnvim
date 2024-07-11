@@ -90,7 +90,7 @@ return lazy.setup(
             }
           }
         end,
-        dependencies = { { 'nvim-tree/nvim-web-devicons' } }
+        dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' }
       }
     }
   })
