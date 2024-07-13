@@ -39,9 +39,37 @@ return lazy.setup(
           { "antosha417/nvim-lsp-file-operations", config = true } }
       },
       "nvim-treesitter/nvim-treesitter",
-      { "elixir-tools/elixir-tools.nvim", dependencies = { "nvim-lua/plenary.nvim" },                                                          tag = "stable" },
-      { "folke/which-key.nvim",           lazy = false },
-      { "williamboman/mason.nvim",        dependencies = { "williamboman/mason-lspconfig.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" }, config = _1_ },
+      {
+        "elixir-tools/elixir-tools.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        tag = "stable",
+        config = function()
+          local elixir = require("elixir")
+          local elixirls = require("elixir.elixirls")
+
+          elixir.setup {
+            nextls = { enable = true },
+            elixirls = {
+              cmd = "elixir-ls",
+              enable = true,
+              settings = elixirls.settings {
+                dialyzerEnabled = true,
+                enableTestLenses = false,
+                suggestSpecs = true,
+              },
+              on_attach = function(client, bufnr)
+                -- vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
+                -- vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
+                -- vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", { buffer = true, noremap = true })
+              end,
+            },
+            projectionist = {
+              enable = true
+            }
+          }
+        end
+      }, { "folke/which-key.nvim", lazy = false },
+      { "williamboman/mason.nvim", dependencies = { "williamboman/mason-lspconfig.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" }, config = _1_ },
       "terrortylor/nvim-comment",
       { "nvim-neotest/neotest",     dependencies = { "nvim-neotest/nvim-nio", "nvim-lua/plenary.nvim", "antoinemadec/FixCursorHold.nvim", "nvim-treesitter/nvim-treesitter" } },
       "ray-x/go.nvim",
