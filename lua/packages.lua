@@ -96,6 +96,13 @@ return lazy.setup(
         config = function()
           require('feline').setup()
         end
+      },
+      {
+        'echasnovski/mini.icons',
+        version = false,
+        config = function()
+          require('mini.icons').setup()
+        end
       }
     }
   })
