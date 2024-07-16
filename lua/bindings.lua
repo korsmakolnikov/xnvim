@@ -1,21 +1,221 @@
 local wk = require("which-key")
-local dap = { 
-  toggle_breakpoint = 
-  function() 
-  end, 
-  continue = 
-  function() 
-  end }
-wk.register(
-{ C = { name = "+Configuration", o = { ":e $MYVIMRC<CR>", "Open init.lua" } }, R = { d = { ":FzfLua deregister_ui_select<CR>", "De-register fzf-lua with vim.ui.select" }, name = "+Fzf-lua", r = { ":FzfLua register_ui_select<CR>", "Register fzf-lua as UI Interface for vim.ui.select" } }, S = { name = "+Snippy", y = { "<Plug>(snippy-cut-text)", "Cut text" } }, b = { d = { ":bd<CR>", "Delete" }, name = "+Buffer" }, c = { a = { ":FzfLua args<CR>", "Find args" }, b = { ":FzfLua buffers<CR>", "Find buffers" }, f = { ":FzfLua files<CR>", "Find files" }, h = { ":FzfLua oldfiles<CR>", "Find in history" }, l = { b = { ":FzfLua blines<CR>", "Find better lines" }, i = { ":FzfLua lines<CR>", "Find lines" }, l = { ":FzfLua loclist<CR>", "Find location" }, name = "+Locations & lines", s = { ":FzfLua loclist_stack<CR>", "Find location stack" } }, name = "+Fzf Commands", q = { name = "Quickfix", q = { ":FzfLua quickfix<CR>", "Find quickfix" }, s = { ":FzfLua quickfix_stack<CR>", "Find quickfix stack" } }, t = { ":FzfLua tabs<CR>", "Find tabs" } }, d = { B = { dap.toggle_breakpoint(), "Toggle breakpoint" }, C = { dap.continue(), "Dap continue" }, R = { ":lua require'dap'.repl.open()<CR>", "REPL" }, b = { ":FzfLua dap_breakpoints<CR>", "List breakpoints" }, c = { ":FzfLua dap_commands<CR>", "DAP commands" }, f = { ":FzfLua dap_frames<CR>", "Active session jump to frame" }, name = "+DAP", o = { ":FzfLua dap_configurations<CR>", "DAP configurations" }, v = { ":FzfLua dap_variables<CR>", "Active session variables" } }, g = { C = { ":FzfLua git_bcommits<CR>", "Commits buffer" }, S = { ":FzfLua git_stash<CR>", "Stash" }, b = { ":FzfLua git_branches<CR>", "Branches" }, c = { ":FzfLua git_commits<CR>", "Commits project" }, f = { ":FzfLua git_files<CR>", "Find versioned files" }, name = "+Git", s = { ":FzfLua git_status<CR>", "Status" }, t = { ":FzfLua git_tags<CR>", "Tags" }, y = { "<cmd>lua require'gitlinker'.get_buf_range_url('n', {action_callback = require'gitlinker.actions'.open_in_browser})<cr>", "Gitlinker" } }, i = { b = { ":FzfLua builtin<CR>", "Fzf-lua builtin commands" }, f = { ":FzfLua filetypes<CR>", "Filetypes" }, l = { ":FzfLua highlights<CR>", "Highlight groups" }, c = { ":FzfLua commands<CR>", "Nvim commands" }, e = { ":FzfLua registers<CR>", "Registers" }, g = { ":FzfLua changes<CR>", "Changes" }, h = { ":FzfLua help_tags<CR>", "Help tags" }, j = { ":FzfLua jumps<CR>", "Jumps" }, k = { ":FzfLua keymaps<CR>", "Key mapping" }, m = { ":FzfLua marks<CR>", "Marks" }, n = { ":FzfLua menus<CR>", "Menus" }, name = "+Fzf Misc", o = { ":FzfLua colorschemes<CR>", "Color schemas" }, p = { ":FzfLua profiles<CR>", "Fzf-lua configuration profiles" }, r = { ":FzfLua resume<CR>", "Resume last command/query" }, s = { ":FzfLua search_history<CR>", "" }, t = { ":FzfLua tagstack<CR>", "Tags" }, x = { ":FzfLua spell_suggest<CR>", "Spelling suggestions" }, z = { ":FzfLua packadd<CR>", "Packadd" } }, n = { b = { ":Neotree buffers toggle=true<CR>", "Neotree buffers" }, g = { ":Neotree git_status position=right toggle=true<CR>", "Neotree git status" }, n = { ":Neotree toggle=true<CR>", "Neotree toggle" }, name = "+Neotree" }, s = { ["<C-l>"] = { ":lua require('fzf-lua').files({ resume = true })<CR>", "Resume file search" }, ["<C-s>"] = { ":FzfLua grep_cword<CR>", "Grep word under cursor" }, G = { C = { ":FzfLua lgrep_curbuf<CR>", "" }, W = { ":FzfLua grep_cWORD<CR>", "Grep WORD under cursor" }, c = { ":FzfLua grep_curbuf<CR>", "" }, g = { ":FzfLua grep<CR>", "Grep" }, l = { ":FzfLua grep_last<CR>", "Grep resume" }, name = "+Grep", p = { ":FzfLua grep_project<CR>", "Grep project" }, v = { ":FzfLua grep_visual<CR>", "Visual grep" }, w = { ":FzfLua grep_cword<CR>", "Grep word under cursor" } }, b = { ":FzfLua live_grep_glob<CR>", "Live grep glob" }, g = { ":FzfLua live_grep<CR>", "Live grep project" }, n = { ":FzfLua live_grep_native<CR>", "Live grep native" }, name = "+Search", r = { ":FzfLua live_grep_resume<CR>", "Live grep resume" } }, t = { SW = { ":FzfLua tags_grep_cWORD<CR>", "Grep WORD under cursor" }, Sp = { ":FzfLua tags_grep<CR>", "Grep project tags" }, Sw = { ":FzfLua tags_grep_cword<CR>", "Grep word under cursor" }, b = { ":FzfLua btags<CR>", "Find tags buffer" }, g = { ":FzfLua tags_live_grep<CR>", "Live grep" }, name = "+Tags", p = { ":FzfLua tags<CR>", "Find tags project" } }, l = { D = { ":FzfLua lsp_declarations<CR>", "Find declaration" }, F = { ":lua vim.lsp.buf.formatting_sync(nil, 5000)<CR>", "Sync buffer format" }, R = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename symbol" }, S = { ":FzfLua lsp_workspace_symbols<CR>", "Find Workspace symbols" }, a = { ":FzfLua lsp_code_actions<CR>", "Find code actions" }, c = { i = { ":FzfLua lsp_incoming_calls<CR>", "Incoming calls" }, name = "+Calls", o = { ":FzfLua lsp_outgoing_calls<CR>", "Outgoing calls" } }, d = { ":FzfLua lsp_definitions<CR>", "Find definition" }, e = { f = { ":lua vim.diagnostic.open_float()<CR>", "Error float" }, n = { ":lua vim.diagnostic.goto_next()<CR>", "Next error" }, name = "+Diagnostic", p = { ":lua vim.diagnostic.goto_prev()<CR>", "Previous error" } }, f = { ":FzfLua lsp_finder<CR>", "All LSP locations combined view" }, h = { h = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Lsp hover" }, name = "+Helper", s = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help" } }, i = { ":FzfLua lsp_implementations<CR>", "Find implementation" }, n = { D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Jump to declaration" }, d = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Jump to definition" }, i = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Jump to implementation" }, name = "+Nav" }, name = "+LSP", r = { ":FzfLua lsp_references<CR>", "Find references" }, s = { ":FzfLua lsp_document_symbols<CR>", "Find symbols" }, t = { ":FzfLua lsp_typedefs<CR>", "Find type definition" }, w = { name = "+Workspace", s = { ":FzfLua lsp_live_workspace_symbols<CR>", "Find symbols" }, x = { ":FzfLua diagnostics_workspace<CR>", "Find diagnostic" } }, x = { ":FzfLua diagnostics_document<CR>", "Find diagnostic" } }, m = { ["?"] = { ":FzfLua man_pages<CR>", "Man pages" }, H = { ":FzfLua command_history<CR>", "Commands history" }, a = { ":FzfLua autocmds<CR>", "Autocommands" }, b = { ":FzfLua builtin<CR>", "Fzf-lua builtin commands" }, c = { ":FzfLua commands<CR>", "Nvim commands" }, e = { ":FzfLua registers<CR>", "Registers" }, f = { ":FzfLua filetypes<CR>", "Filetypes" }, g = { ":FzfLua changes<CR>", "Changes" }, h = { ":FzfLua help_tags<CR>", "Help tags" }, j = { ":FzfLua jumps<CR>", "Jumps" }, k = { ":FzfLua keymaps<CR>", "Key mapping" }, l = { ":FzfLua highlights<CR>", "Highlight groups" }, m = { ":FzfLua marks<CR>", "Marks" }, n = { ":FzfLua menus<CR>", "Menus" }, name = "+Fzf Misc", o = { ":FzfLua colorschemes<CR>", "Color schemas" }, p = { ":FzfLua profiles<CR>", "Fzf-lua configuration profiles" }, r = { ":FzfLua resume<CR>", "Resume last command/query" }, s = { ":FzfLua search_history<CR>", "" }, t = { ":FzfLua tagstack<CR>", "Tags" }, x = { ":FzfLua spell_suggest<CR>", "Spelling suggestions" }, z = { ":FzfLua packadd<CR>", "Packadd" } }, y = { ":let @+=@%<CR>", "Yank file path" } },
-  { prefix = "<Leader>" })
-wk.register({ ["<C-c>"] = { ":lua require'oil_manager'.toggle_on_current_folder()<CR>", "Oil current directory" },
-  ["<C-f>"] = { ":lua require'oil_manager'.toggle_on_root_folder()<CR>", "Oil" }, ["<S-ESC>"] = { ":noh<CR>", "No highlights" },
-  ["<S-TAB>"] = { ":BufferLineCyclePrev<CR>", "Previous tab" }, ["<TAB>"] = { ":BufferLineCycleNext<CR>", "Next tab" },
-  ["\\"] = { ":Neotree reveal<cr>", "Neotree" } })
-wk.register(
-{ ["<C-f>"] = { ":FzfLua grep_visual<CR>", "Grep visual" }, ["<S-Tab>"] = { "<gv", "S-Tab" }, ["<Tab>"] = { ">gv |", "Tab" } },
-  { mode = "v" })
-wk.register({ s = { name = "+Search", v = { ":FzfLua grep_visual<CR>", "Grep tags visual" } } },
-  { mode = "v", prefix = "<Leader>" })
-return wk.register({ ["<S-Tab>"] = { "<gv", "S-Tab" }, ["<Tab>"] = { ">gv |", "Tab" } }, { mode = "x" })
+local dap = {
+  toggle_breakpoint = function()
+  end,
+  continue = function()
+  end
+}
+wk.add(
+  {
+    {
+      "<Leader>C",
+      group = "+Configuration",
+      { "<Leader>Co", ":e $MYVIMRC<CR>", desc = "Open init.lua", },
+    },
+    {
+      "<Leader>S",
+      group = "+Snippy",
+      { "<Leader>Sy", "<plug>(snippy-cut-text)", desc = "cut text", },
+    },
+    {
+      "<Leader>b",
+      group = "+Buffer",
+      { "<Leader>bd", ":bd<CR>", desc = "Delete", },
+    },
+    {
+      "<Leader>c",
+      group = "+Fzf Commands",
+      { "<Leader>ca", ":FzfLua args<CR>", desc = "Find args" }
+    },
+    {
+      "<Leader>R",
+      group = "+Fzf-lua",
+      { "<Leader>Rd", ":FzfLua deregister_ui_select<CR>", desc = "De-register fzf-lua with vim.ui.select" },
+      { "<Leader>Rr", ":FzfLua register_ui_select<CR>",   desc = "Register fzf-lua as UI Interface for vim.ui.select" }
+    },
+    {
+      "<Leader>c",
+      group = "+Locations & lines",
+      { "<Leader>cb", ":FzfLua buffers<CR>",  desc = "Find buffers" },
+      { "<Leader>cf", ":FzfLua files<CR>",    desc = "Find files" },
+      { "<Leader>ch", ":FzfLua oldfiles<CR>", desc = "Find in history" },
+      {
+        "<Leader>cl",
+        group = "+Locations & lines",
+        { "<Leader>clb", ":FzfLua blines<CR>",        desc = "Find better lines" },
+        { "<Leader>cli", ":FzfLua lines<CR>",         desc = "Find lines" },
+        { "<Leader>cll", ":FzfLua loclist<CR>",       desc = "Find location" },
+        { "<Leader>cls", ":FzfLua loclist_stack<CR>", desc = "Find location stack" }
+      },
+      {
+        "<Leader>cq",
+        group = "Quickfix",
+        { "<Leader>cqq", ":FzfLua quickfix<CR>",       desc = "Find quickfix" },
+        { "<Leader>cqs", ":FzfLua quickfix_stack<CR>", desc = "Find quickfix stack" }
+      },
+      { "<Leader>ct", ":FzfLua tabs<CR>", desc = "Find tabs" }
+    },
+    {
+      "<Leader>d",
+      group = "+DAP",
+      { "<Leader>dB", dap.toggle_breakpoint(),             desc = "Toggle breakpoint" },
+      { "<Leader>dC", dap.continue(),                      desc = "Dap continue" },
+      { "<Leader>dR", ":lua require'dap'.repl.open()<CR>", desc = "REPL" },
+      { "<Leader>db", ":FzfLua dap_breakpoints<CR>",       desc = "List breakpoints" },
+      { "<Leader>dc", ":FzfLua dap_commands<CR>",          desc = "DAP commands" },
+      { "<Leader>df", ":FzfLua dap_frames<CR>",            desc = "Active session jump to frame" },
+      { "<Leader>do", ":FzfLua dap_configurations<CR>",    desc = "DAP configurations" },
+      { "<Leader>dv", ":FzfLua dap_variables<CR>",         desc = "Active session variables" }
+    },
+    {
+      "<Leader>g",
+      group = "+Git",
+      { "<Leader>gC", ":FzfLua git_bcommits<CR>", desc = "Commits buffer" },
+      { "<Leader>gS", ":FzfLua git_stash<CR>",    desc = "Stash" },
+      { "<Leader>gb", ":FzfLua git_branches<CR>", desc = "Branches" },
+      { "<Leader>gc", ":FzfLua git_commits<CR>",  desc = "Commits project" },
+      { "<Leader>gf", ":FzfLua git_files<CR>",    desc = "Find versioned files" },
+      { "<Leader>gs", ":FzfLua git_status<CR>",   desc = "Status" },
+      { "<Leader>gt", ":FzfLua git_tags<CR>",     desc = "Tags" },
+      {
+        "<Leader>gy",
+        "<cmd>lua require'gitlinker'.get_buf_range_url('n', {action_callback = require'gitlinker.actions'.open_in_browser})<cr>",
+        desc = "Gitlinker"
+      }
+    },
+    {
+      "<Leader>s",
+      group = "+Search",
+      { "<C-l>", ":lua require('fzf-lua').files({ resume = true })<CR>", desc = "Resume file search" },
+      { "<C-s>", ":FzfLua grep_cword<CR>",                               desc = "Grep word under cursor" },
+      {
+        "<Leader>sG",
+        group = "+Grep",
+        { "<Leader>sGC", ":FzfLua lgrep_curbuf<CR>", desc = "LGrep current buffer" },
+        { "<Leader>sGW", ":FzfLua grep_cWORD<CR>",   desc = "Grep WORD under cursor" },
+        { "<Leader>sGc", ":FzfLua grep_curbuf<CR>",  desc = "Grep current buffer" },
+        { "<Leader>sGg", ":FzfLua grep<CR>",         desc = "Grep" },
+        { "<Leader>sGl", ":FzfLua grep_last<CR>",    desc = "Grep resume" },
+        { "<Leader>sGp", ":FzfLua grep_project<CR>", desc = "Grep project" },
+        { "<Leader>sGv", ":FzfLua grep_visual<CR>",  desc = "Visual grep" },
+        { "<Leader>sGw", ":FzfLua grep_cword<CR>",   desc = "Grep word under cursor" }
+      },
+      { "<Leader>sb", ":FzfLua live_grep_glob<CR>",   desc = "Live grep glob" },
+      { "<Leader>sg", ":FzfLua live_grep<CR>",        desc = "Live grep project" },
+      { "<Leader>sn", ":FzfLua live_grep_native<CR>", desc = "Live grep native" },
+      { "<Leader>sr", ":FzfLua live_grep_resume<CR>", desc = "Live grep resume" }
+    },
+    {
+      "<Leader>T",
+      group = "+Tags",
+      { "<Leader>TSW", ":FzfLua tags_grep_cWORD<CR>", desc = "Grep WORD under cursor" },
+      { "<Leader>TSp", ":FzfLua tags_grep<CR>",       desc = "Grep project tags" },
+      { "<Leader>TSw", ":FzfLua tags_grep_cword<CR>", desc = "Grep word under cursor" },
+      { "<Leader>Tb",  ":FzfLua btags<CR>",           desc = "Find tags buffer" },
+      { "<Leader>Tg",  ":FzfLua tags_live_grep<CR>",  desc = "Live grep" },
+      { "<Leader>Tp",  ":FzfLua tags<CR>",            desc = "Find tags project" }
+    },
+    {
+      "<Leader>l",
+      group = "+LSP",
+      { "<Leader>lD", ":FzfLua lsp_declarations<CR>",                    desc = "Find declaration" },
+      { "<Leader>lF", ":lua vim.lsp.buf.formatting_sync(nil, 5001)<CR>", desc = "Sync buffer format" },
+      { "<Leader>lR", "<cmd>lua vim.lsp.buf.rename()<CR>",               desc = "Rename symbol" },
+      { "<Leader>lS", ":FzfLua lsp_workspace_symbols<CR>",               desc = "Find Workspace symbols" },
+      { "<Leader>la", ":FzfLua lsp_code_actions<CR>",                    desc = "Find code actions" },
+      {
+        "<Leader>lc",
+        group = "+Calls",
+        { "<Leader>lci", ":FzfLua lsp_incoming_calls<CR>", desc = "Incoming calls" },
+        { "<Leader>lco", ":FzfLua lsp_outgoing_calls<CR>", desc = "Outgoing calls" }
+      },
+      { "<Leader>ld", ":FzfLua lsp_definitions<CR>", desc = "Find definition" },
+      {
+        "<Leader>le",
+        group = "+Diagnostic",
+        { "<Leader>lef", ":lua vim.diagnostic.open_float()<CR>", desc = "Error float" },
+        { "<Leader>len", ":lua vim.diagnostic.goto_next()<CR>",  desc = "Next error" },
+        { "<Leader>lep", ":lua vim.diagnostic.goto_prev()<CR>",  desc = "Previous error" }
+      },
+      { "<Leader>lf", ":FzfLua lsp_finder<CR>",      desc = "All LSP locations combined view" },
+      {
+        "<Leader>lh",
+        group = "+Helper",
+        { "<Leader>lhh", "<cmd>lua vim.lsp.buf.hover()<CR>",          desc = "Lsp hover" },
+        { "<Leader>lhs", "<cmd>lua vim.lsp.buf.signature_help()<CR>", desc = "Signature help" }
+      },
+      { "<Leader>li", ":FzfLua lsp_implementations<CR>",  desc = "Find implementation" },
+      {
+        "<Leader>ln",
+        group = "+Nav",
+        { "<Leader>lnD", "<cmd>lua vim.lsp.buf.declaration()<CR>",    desc = "Jump to declaration" },
+        { "<Leader>lnd", "<cmd>lua vim.lsp.buf.definition()<CR>",     desc = "Jump to definition" },
+        { "<Leader>lni", "<cmd>lua vim.lsp.buf.implementation()<CR>", desc = "Jump to implementation" },
+      },
+      { "<Leader>lr", ":FzfLua lsp_references<CR>",       desc = "Find references" },
+      { "<Leader>ls", ":FzfLua lsp_document_symbols<CR>", desc = "Find symbols" },
+      { "<Leader>lt", ":FzfLua lsp_typedefs<CR>",         desc = "Find type definition" },
+      {
+        "<Leader>lw",
+        group = "+Workspace",
+        { "<Leader>lws", ":FzfLua lsp_live_workspace_symbols<CR>", desc = "Find symbols" },
+        { "<Leader>lwx", ":FzfLua diagnostics_workspace<CR>",      desc = "Find diagnostic" }
+      },
+      { "<Leader>lx", ":FzfLua diagnostics_document<CR>", desc = "Find diagnostic" }
+    },
+    {
+      "<Leader>m",
+      group = "+Fzf Misc",
+      { "?",          ":FzfLua man_pages<CR>",       desc = "Man pages" },
+      { "<Leader>mH", ":FzfLua command_history<CR>", desc = "Commands history" },
+      { "<Leader>ma", ":FzfLua autocmds<CR>",        desc = "Autocommands" },
+      { "<Leader>mb", ":FzfLua builtin<CR>",         desc = "Fzf-lua builtin commands" },
+      { "<Leader>mc", ":FzfLua commands<CR>",        desc = "Nvim commands" },
+      { "<Leader>me", ":FzfLua registers<CR>",       desc = "Registers" },
+      { "<Leader>mf", ":FzfLua filetypes<CR>",       desc = "Filetypes" },
+      { "<Leader>mg", ":FzfLua changes<CR>",         desc = "Changes" },
+      { "<Leader>mh", ":FzfLua help_tags<CR>",       desc = "Help tags" },
+      { "<Leader>mj", ":FzfLua jumps<CR>",           desc = "Jumps" },
+      { "<Leader>mk", ":FzfLua keymaps<CR>",         desc = "Key mapping" },
+      { "<Leader>ml", ":FzfLua highlights<CR>",      desc = "Highlight groups" },
+      { "<Leader>mm", ":FzfLua marks<CR>",           desc = "Marks" },
+      { "<Leader>mn", ":FzfLua menus<CR>",           desc = "Menus" },
+      { "<Leader>mo", ":FzfLua colorschemes<CR>",    desc = "Color schemas" },
+      { "<Leader>mp", ":FzfLua profiles<CR>",        desc = "Fzf-lua configuration profiles" },
+      { "<Leader>mr", ":FzfLua resume<CR>",          desc = "Resume last command/query" },
+      { "<Leader>ms", ":FzfLua search_history<CR>",  desc = "Search history" },
+      { "<Leader>mt", ":FzfLua tagstack<CR>",        desc = "Tags" },
+      { "<Leader>mx", ":FzfLua spell_suggest<CR>",   desc = "Spelling suggestions" },
+      { "<Leader>mz", ":FzfLua packadd<CR>",         desc = "Packadd" }
+    },
+    { "<Leader>y", ":let @+=@%<CR>", desc = "Yank file path" }
+  }
+)
+wk.add(
+  {
+    { "<C-c>",   ":lua require'oil_manager'.toggle_on_current_folder()<CR>", desc = "Oil current directory" },
+    { "<C-f>",   ":lua require'oil_manager'.toggle_on_root_folder()<CR>",    desc = "Oil" },
+    { "<S-ESC>", ":noh<CR>",                                                 desc = "No highlights" },
+    { "<S-Tab>", ":BufferLineCyclePrev<CR>",                                 desc = "Previous tab" },
+    { "<Tab>",   ":BufferLineCycleNext<CR>",                                 desc = "Next tab" },
+  }
+)
+wk.add(
+  {
+    { "<C-f>",   ":FzfLua grep_visual<CR>", desc = "Grep visual", mode = "v" },
+    { "<S-Tab>", "<gv",                     desc = "S-Tab",       mode = "v" },
+    { "<Tab>",   ">gv |",                   desc = "Tab",         mode = "v" },
+  }
+)
+wk.add(
+  {
+    "<Leader>s",
+    group = "+Search",
+    mode = "v",
+    { "<Leader>sv", ":FzfLua grep_visual<CR>", desc = "Grep tags visual", mode = "v" },
+  }
+)
+wk.add({
+  { "<S-Tab>", "<gv",   desc = "S-Tab", mode = "x" },
+  { "<Tab>",   ">gv |", desc = "Tab",   mode = "x" },
+})

@@ -4,11 +4,11 @@ local function _1_()
   d.setup()
   return d.lsp()
 end
-local function _2_()
-  vim.o.timeout = true
-  vim.o.timeoutlen = 300
-  return (require("which-key")).setup({ spelling = { enabled = true, suggestions = 20 } })
-end
+-- local function _2_()
+--   vim.o.timeout = true
+--   vim.o.timeoutlen = 300
+--   return (require("which-key")).setup({ spelling = { enabled = true, suggestions = 20 } })
+-- end
 
 return lazy.setup(
   {
@@ -68,10 +68,19 @@ return lazy.setup(
             }
           }
         end
-      }, { "folke/which-key.nvim", lazy = false },
-      { "williamboman/mason.nvim", dependencies = { "williamboman/mason-lspconfig.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" }, config = _1_ },
+      },
+      {
+        "folke/which-key.nvim",
+        lazy = false,
+        event = "VeryLazy",
+        opts = {
+          preset = "modern"
+        }
+
+      },
+      { "williamboman/mason.nvim", dependencies = { "williamboman/mason-lspconfig.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" },                                      config = _1_ },
       "terrortylor/nvim-comment",
-      { "nvim-neotest/neotest",     dependencies = { "nvim-neotest/nvim-nio", "nvim-lua/plenary.nvim", "antoinemadec/FixCursorHold.nvim", "nvim-treesitter/nvim-treesitter" } },
+      { "nvim-neotest/neotest",    dependencies = { "nvim-neotest/nvim-nio", "nvim-lua/plenary.nvim", "antoinemadec/FixCursorHold.nvim", "nvim-treesitter/nvim-treesitter" } },
       "ray-x/go.nvim",
       "ray-x/guihua.lua",
       "bfredl/nvim-luadev",
@@ -91,7 +100,6 @@ return lazy.setup(
       { "junegunn/fzf",          build = "./install --bin" },
       "ibhagwan/fzf-lua",
       "junegunn/goyo.vim",
-      { "folke/which-key.nvim",  config = _2_ },
       { "mfussenegger/nvim-dap", dependencies = { "rcarriga/nvim-dap-ui", "mxsdev/nvim-dap-vscode-js" } },
       { "dcampos/nvim-snippy",   dependencies = { "honza/vim-snippets", "dcampos/cmp-snippy" } },
       {
