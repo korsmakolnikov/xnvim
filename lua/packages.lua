@@ -4,11 +4,6 @@ local function _1_()
   d.setup()
   return d.lsp()
 end
--- local function _2_()
---   vim.o.timeout = true
---   vim.o.timeoutlen = 300
---   return (require("which-key")).setup({ spelling = { enabled = true, suggestions = 20 } })
--- end
 
 return lazy.setup(
   {
@@ -58,9 +53,16 @@ return lazy.setup(
                 suggestSpecs = true,
               },
               on_attach = function(client, bufnr)
-                -- vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
-                -- vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
-                -- vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", { buffer = true, noremap = true })
+                local wk = require("which-key")
+                wk.add({
+                  {
+                    "<Leader>E",
+                    group = "+Elixir",
+                    { "<Leader>Ep", ":ElixirFromPipe<cr>",    desc = "From Pipe", },
+                    { "<Leader>EP", ":ElixirToPipe<cr>",      desc = "To Pipe", },
+                    { "<Leader>Em", ":ElixirExpandMacro<cr>", desc = "Expand Macro", },
+                  }
+                })
               end,
             },
             projectionist = {
@@ -79,12 +81,22 @@ return lazy.setup(
 
       },
       { "williamboman/mason.nvim", dependencies = { "williamboman/mason-lspconfig.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" },                                      config = _1_ },
-      "terrortylor/nvim-comment",
+      {
+        "terrortylor/nvim-comment",
+        config = function()
+          require "nvim_comment".setup()
+        end
+      },
       { "nvim-neotest/neotest",    dependencies = { "nvim-neotest/nvim-nio", "nvim-lua/plenary.nvim", "antoinemadec/FixCursorHold.nvim", "nvim-treesitter/nvim-treesitter" } },
       "ray-x/go.nvim",
       "ray-x/guihua.lua",
       "bfredl/nvim-luadev",
-      "akinsho/bufferline.nvim",
+      {
+        "akinsho/bufferline.nvim",
+        config = function()
+          require "bufferline".setup()
+        end
+      },
       "lewis6991/impatient.nvim",
       "stevearc/oil.nvim",
       { "SirZenith/oil-vcs-status", dependencies = { "stevearc/oil.nvim" } },

@@ -8,7 +8,7 @@
 
 (vim.api.nvim_create_autocmd :BufEnter
                              {:command ":set autoindent noexpandtab tabstop=4 shiftwidth=4"
-                              :pattern [:*.rs :*.s :*.asm]})
+                              :pattern [:*.rs :*.s :*.asm :*.php]})
 
 (vim.api.nvim_create_autocmd :BufEnter
                              {:command ":set autoindent noexpandtab tabstop=8 shiftwidth=8"

@@ -17,7 +17,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 require 'packages'
-
 require 'impatient'
 
 vim.g.mapleader = ","
@@ -73,13 +72,8 @@ vim.opt.spelllang = { "en_us", "it" }
 _G.Original_folder = vim.loop.cwd()
 
 require "visual.theme"
--- require 'lualine.themes.gruvbox-material'
-require "nvim_comment".setup()
-require "bufferline".setup()
-
 require "neovide"
 require "oil_manager"
-require "bindings"
 require "lib"
 require "visual.lualine"
 require "mason_setup"
@@ -93,3 +87,4 @@ require "markdown"
 require "presentation"
 require "compiled.autogroups"
 require "gitlinker".setup()
+require "bindings"
