@@ -113,7 +113,23 @@ return lazy.setup(
       "ibhagwan/fzf-lua",
       "junegunn/goyo.vim",
       { "mfussenegger/nvim-dap", dependencies = { "rcarriga/nvim-dap-ui", "mxsdev/nvim-dap-vscode-js" } },
-      { "dcampos/nvim-snippy",   dependencies = { "honza/vim-snippets", "dcampos/cmp-snippy" } },
+      -- {
+      --   "dcampos/nvim-snippy",
+      --   dependencies = { "honza/vim-snippets", "dcampos/cmp-snippy" },
+      --   config = function()
+      --     require('snippy').setup({
+      --       mappings = {
+      --         is = {
+      --           ['<Tab>'] = 'expand_or_advance',
+      --           ['<S-Tab>'] = 'previous',
+      --         },
+      --         nx = {
+      --           ['<leader>x'] = 'cut_text',
+      --         },
+      --       },
+      --     })
+      --   end
+      -- },
       {
         'nvimdev/dashboard-nvim',
         event = 'VimEnter',

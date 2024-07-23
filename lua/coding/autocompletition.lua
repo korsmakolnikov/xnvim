@@ -3,7 +3,7 @@ local cmp = require 'cmp'
 cmp.setup({
   snippet = {
     expand = function(args)
-      require 'snippy'.expand_snippet(args.body)
+      -- require 'snippy'.expand_snippet(args.body)
     end
   },
   window = {
@@ -28,23 +28,13 @@ cmp.setup({
         end
       }
     },
-    { name = 'snippy' },
+    -- { name = 'snippy' },
     { name = 'nvim_lsp' },
     {
       name = "buffer-lines",
       option = { line_numbers = true, line_number_separator = ":", max_size = 0 } -- disabled due to a formatting issue with the size of the succestion
     },
     { name = 'treesitter' },
-    {
-      name = "spell",
-      option = {
-        keep_all_entries = false,
-        enable_in_context = function()
-          return true
-        end,
-        preselect_correct_word = true,
-      },
-    },
     { name = 'nvim_lua' },
   }),
   formatting = {
