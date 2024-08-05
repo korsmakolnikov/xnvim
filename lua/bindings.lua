@@ -58,8 +58,8 @@ wk.add(
       { "<Leader>fy", ":let @+=@%<CR>", desc = "Yank file path" },
       {
         group = "+Oil",
-        { "<C-f><C-f>", ":lua require'oil_manager'.toggle_on_current_folder()<CR>", desc = "Oil current directory" },
-        { "<C-f><C-c>", ":lua require'oil_manager'.toggle_on_root_folder()<CR>",    desc = "Oil" },
+        { "<C-f><C-c>", ":lua require'oil_manager'.toggle_on_current_folder()<CR>", desc = "Oil current directory" },
+        { "<C-f><C-f>", ":lua require'oil_manager'.toggle_on_root_folder()<CR>",    desc = "Oil" },
       }
     },
 
