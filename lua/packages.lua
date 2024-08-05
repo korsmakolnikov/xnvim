@@ -177,6 +177,18 @@ return lazy.setup(
         config = function()
           require('mini.icons').setup()
         end
+      },
+      { 'tlaplus-community/tlaplus-nvim-plugin' },
+      {
+        "susliko/tla.nvim",
+        config = function()
+          require("tla").setup(
+            {
+              java_executable = '/usr/bin/java',
+              tla2tools = '/usr/bin/tla2tools.jar',
+            }
+          )
+        end
       }
     }
   })
