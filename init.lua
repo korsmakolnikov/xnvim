@@ -93,7 +93,7 @@ vim.opt.termguicolors = true
 vim.g.loaded_python_provider = '0'
 vim.g.goyo_width = '80'
 vim.g.neovide_fullscreen = true
-set.guifont = 'Fira Code Font:h14'
+set.guifont = 'Fira Code Font:h14,Symbols Nerd Font'
 vim.g.neovide_cursor_vfx_mode = "railgun"
 vim.opt.encoding = "utf-8"
 vim.fn.mkdir(vim.fn.stdpath("data") .. "site/spell", "p")
