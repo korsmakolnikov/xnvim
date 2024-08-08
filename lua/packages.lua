@@ -77,11 +77,13 @@ return lazy.setup(
       },
       {
         "folke/which-key.nvim",
-        lazy = false,
         event = "VeryLazy",
         opts = {
           preset = "modern"
-        }
+        },
+        config = function()
+          require "bindings"
+        end
 
       },
       { "williamboman/mason.nvim", dependencies = { "williamboman/mason-lspconfig.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" },                                      config = _1_ },
