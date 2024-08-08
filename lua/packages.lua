@@ -184,10 +184,14 @@ return lazy.setup(
       {
         "susliko/tla.nvim",
         config = function()
+          local java_executable = '/usr/bin/java';
+          if vim.fn.has('wsl') == 1 then
+            java_executable = '/usr/sbin/java'
+          end
+
           require("tla").setup(
             {
-              java_executable = '/usr/bin/java',
-              tla2tools = '/usr/bin/tla2tools.jar',
+              java_executable = java_executable
             }
           )
         end
