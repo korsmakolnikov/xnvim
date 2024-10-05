@@ -105,7 +105,7 @@ require('go').setup({
 })
 
 
-require 'lspconfig'.tsserver.setup {
+require 'lspconfig'.ts_ls.setup {
   capabilities = capabilities,
   -- on_attach = on_attach,
   root_dir = require 'lspconfig'.util.root_pattern("package.json"),
