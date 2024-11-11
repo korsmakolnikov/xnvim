@@ -213,3 +213,5 @@ swift_capabilities.workspace = {
 require 'lspconfig'.sourcekit.setup({
   capabilities = swift_capabilities
 })
+
+require 'lspconfig'.tilt_ls.setup {}
