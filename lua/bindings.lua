@@ -106,8 +106,8 @@ wk.add(
       { "<Leader>bg", ":FzfLua grep_curbuf<CR>",                         desc = "Grep current buffer" },
       {
         group = "+Buffer Nav",
-        { "<S-Tab>", ":BufferLineCyclePrev<CR>", desc = "Previous tab" },
-        { "<Tab>",   ":BufferLineCycleNext<CR>", desc = "Next tab" },
+        { "<S-Tab>", ":bp<CR>", desc = "Previous tab" },
+        { "<Tab>",   ":bn<CR>", desc = "Next tab" },
       },
     },
 

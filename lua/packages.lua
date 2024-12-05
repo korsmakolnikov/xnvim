@@ -37,7 +37,7 @@ return lazy.setup(
       {
         "elixir-tools/elixir-tools.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
-        tag = "stable",
+        version = "*",
         config = function()
           local elixir = require("elixir")
           local elixirls = require("elixir.elixirls")
@@ -45,7 +45,6 @@ return lazy.setup(
           elixir.setup {
             nextls = { enable = true },
             elixirls = {
-              cmd = "elixir-ls",
               enable = true,
               settings = elixirls.settings {
                 dialyzerEnabled = true,
@@ -86,23 +85,17 @@ return lazy.setup(
         end
 
       },
-      { "williamboman/mason.nvim", dependencies = { "williamboman/mason-lspconfig.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" },                                      config = _1_ },
+      { "williamboman/mason.nvim", dependencies = { "williamboman/mason-lspconfig.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" },   config = _1_ },
       {
         "terrortylor/nvim-comment",
         config = function()
           require "nvim_comment".setup()
         end
       },
-      { "nvim-neotest/neotest",    dependencies = { "nvim-neotest/nvim-nio", "nvim-lua/plenary.nvim", "antoinemadec/FixCursorHold.nvim", "nvim-treesitter/nvim-treesitter" } },
+      { "nvim-neotest/neotest",    dependencies = { "nvim-neotest/nvim-nio", "nvim-lua/plenary.nvim", "antoinemadec/FixCursorHold.nvim" } },
       "ray-x/go.nvim",
       "ray-x/guihua.lua",
       "bfredl/nvim-luadev",
-      {
-        "akinsho/bufferline.nvim",
-        config = function()
-          require "bufferline".setup()
-        end
-      },
       "lewis6991/impatient.nvim",
       "stevearc/oil.nvim",
       { "SirZenith/oil-vcs-status", dependencies = { "stevearc/oil.nvim" } },
@@ -164,7 +157,7 @@ return lazy.setup(
             }
           }
         end,
-        dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' }
+        dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' }
       },
       {
         'freddiehaddad/feline.nvim',

@@ -4,7 +4,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-local servers = { 'clangd', 'jsonls', 'elmls', 'hls', 'lua_ls', 'bashls', 'yamlls', 'marksman' }
+local servers = { 'clangd', 'jsonls', 'elmls', 'lua_ls', 'bashls', 'yamlls', 'marksman' }
 for _, lsp in pairs(servers) do
   require 'lspconfig'[lsp].setup {
     -- on_attach = on_attach,
@@ -174,8 +174,8 @@ local inlay_hints_default_configuration = {
   enabled_at_startup = true,
   debug_mode = false,
 }
-require("lsp-inlayhints").setup(inlay_hints_default_configuration)
 
+require("lsp-inlayhints").setup(inlay_hints_default_configuration)
 require 'lspconfig'.cmake.setup {}
 
 require 'lspconfig.configs'.fennel_language_server = {
@@ -202,16 +202,5 @@ require 'lspconfig.configs'.fennel_language_server = {
 }
 
 require 'coding.custom_formatters'.init()
-
-local swift_capabilities = capabilities
-swift_capabilities.workspace = {
-  didChangeWatchedFiles = {
-    dynamicRegistration = true,
-  }
-}
-
-require 'lspconfig'.sourcekit.setup({
-  capabilities = swift_capabilities
-})
 
 require 'lspconfig'.tilt_ls.setup {}

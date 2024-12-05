@@ -30,7 +30,6 @@ require 'nvim-treesitter.configs'.setup {
     "json",
     "luadoc",
     "luap",
-    "llvm",
     "make",
     "markdown",
     "markdown_inline",
@@ -42,7 +41,6 @@ require 'nvim-treesitter.configs'.setup {
     "rust",
     "sql",
     "starlark",
-    "swift",
     "toml",
     "vim",
     "vimdoc",
@@ -50,9 +48,8 @@ require 'nvim-treesitter.configs'.setup {
   },
   -- ensure_installed = "all", -- install parsers for all supported languages
   sync_install = false,
-  ignore_install = {},
-  highlight = {
-    enable = true,
-    disable = {},
-  },
+  auto_install = true,
+  additional_vim_regex_highlighting = false,
+  highlight = { enable = true, },
+  indent = { enable = true }
 }
