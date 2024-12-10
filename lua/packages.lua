@@ -47,7 +47,8 @@ return lazy.setup(
             elixirls = {
               enable = true,
               settings = elixirls.settings {
-                dialyzerEnabled = true,
+                dialyzerEnabled = false,
+                fetchDeps = false,
                 enableTestLenses = false,
                 suggestSpecs = true,
               },
