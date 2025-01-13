@@ -1,3 +1,4 @@
+local gs = require('gitsigns')
 local wk = require("which-key")
 local ts = require("telescope.builtin")
 local dap = {
@@ -173,7 +174,25 @@ wk.add(
         "<Leader>gy",
         "<cmd>lua require'gitlinker'.get_buf_range_url('n', {action_callback = require'gitlinker.actions'.open_in_browser})<cr>",
         desc = "Gitlinker"
-      }
+      },
+    },
+
+    {
+      "<Leader>G",
+      group = "+Gitsigns",
+      { "<Leader>Ghs", gs.stage_hunk,                                                       desc = "Gitsigns stage hunk" },
+      { "<Leader>Ghr", gs.reset_hunk,                                                       desc = "Gitsigns reset hunk", },
+      { "<Leader>Ghr", function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, desc = "Gitsigns reset hunk",               mode = 'v' },
+      { "<Leader>Ghs", function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, desc = "Gitsigns stage hunk",               mode = 'v' },
+      { "<Leader>Ghu", gs.undo_stage_hunk,                                                  desc = "Gitsigns undo stage hunk" },
+      { "<Leader>Ghp", gs.preview_hunk,                                                     desc = "Gitsigns preview hunk" },
+      { "<Leader>Gbs", gs.stage_buffer,                                                     desc = "Gitsigns stage buffer" },
+      { "<Leader>Gbr", gs.reset_buffer,                                                     desc = "Gitsigns reset buffer" },
+      { "<Leader>Gd",  gs.diffthis,                                                         desc = "Gitsigns git diff" },
+      { "<Leader>GD",  function() gs.diffthis('~') end,                                     desc = "Gitsigns git diff" },
+      { "<Leader>GE",  gs.toggle_deleted,                                                   desc = "Gitsigns toggle deleted" },
+      { "<Leader>GlB", gs.toogle_current_line_blame,                                        desc = "Gitsigns toggle current line blame" },
+      { "<Leader>Glb", function() gs.blame_line { full = true } end,                        desc = "Gitsigns line blame" },
     },
 
     {

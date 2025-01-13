@@ -37,53 +37,6 @@ return lazy.setup(
         "nvim-treesitter/nvim-treesitter",
         config = function()
           require 'nvim-treesitter.configs'.setup {
-            -- ensure_installed = {
-            --   "c",
-            --   "lua",
-            --   "query",
-            --   "bash",
-            --   "cmake",
-            --   "comment",
-            --   "commonlisp",
-            --   "cpp",
-            --   "disassembly",
-            --   "dockerfile",
-            --   "erlang",
-            --   "fennel",
-            --   "git_rebase",
-            --   "gitcommit",
-            --   "gitignore",
-            --   "go",
-            --   "gomod",
-            --   "gosum",
-            --   "gowork",
-            --   "elixir",
-            --   "heex",
-            --   "eex",
-            --   "graphql",
-            --   "helm",
-            --   "html",
-            --   "http",
-            --   "javascript",
-            --   "json",
-            --   "luadoc",
-            --   "luap",
-            --   "make",
-            --   "markdown",
-            --   "markdown_inline",
-            --   "nasm",
-            --   "php",
-            --   "phpdoc",
-            --   "proto",
-            --   "regex",
-            --   "rust",
-            --   "sql",
-            --   "starlark",
-            --   "toml",
-            --   "vim",
-            --   "vimdoc",
-            --   "xml",
-            -- },
             sync_install = false,
             auto_install = true,
             additional_vim_regex_highlighting = false,
@@ -247,6 +200,12 @@ return lazy.setup(
             }
           )
         end
-      }
+      },
+      {
+        'lewis6991/gitsigns.nvim',
+        config = function()
+          require('gitsigns').setup()
+        end
+      },
     }
   })
