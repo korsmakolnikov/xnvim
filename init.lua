@@ -100,6 +100,9 @@ vim.fn.mkdir(vim.fn.stdpath("data") .. "site/spell", "p")
 vim.opt.spell = true
 vim.opt.spelllang = { "en_us", "it" }
 _G.Original_folder = vim.loop.cwd()
+-- Tabby options
+vim.o.showtabline = 2
+vim.opt.sessionoptions = 'curdir,folds,globals,help,tabpages,terminal,winsize'
 
 require "visual.theme"
 require "neovide"

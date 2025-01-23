@@ -15,6 +15,28 @@ return lazy.setup(
       "udayvir-singh/hibiscus.nvim",
       "nvim-lua/plenary.nvim",
       {
+        'nvim-lualine/lualine.nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        config = function()
+          require('lualine').setup({
+            sections = {
+              lualine_c = {
+                function()
+                  return require('lsp-progress').progress()
+                end,
+              }
+            },
+          })
+        end
+
+      },
+      {
+        'linrongbin16/lsp-progress.nvim',
+        config = function()
+          require('lsp-progress').setup()
+        end
+      },
+      {
         "neovim/nvim-lspconfig",
         dependencies = {
           "folke/neodev.nvim",
@@ -172,13 +194,6 @@ return lazy.setup(
         dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' }
       },
       {
-        'freddiehaddad/feline.nvim',
-        opts = {},
-        config = function()
-          require('feline').setup()
-        end
-      },
-      {
         'echasnovski/mini.icons',
         version = false,
         config = function()
@@ -207,5 +222,12 @@ return lazy.setup(
           require('gitsigns').setup()
         end
       },
+      {
+        'nanozuki/tabby.nvim',
+        dependencies = 'nvim-tree/nvim-web-devicons',
+        config = function()
+          require('tabby').setup()
+        end,
+      }
     }
   })

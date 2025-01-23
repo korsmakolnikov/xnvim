@@ -14,3 +14,9 @@
                              {:command ":set autoindent noexpandtab tabstop=8 shiftwidth=8"
                               :pattern :*.go})
 
+(vim.api.nvim_create_augroup :lualine_augroup {:clear true})
+(vim.api.nvim_create_autocmd :User
+                             {:callback (. (require :lualine) :refresh)
+                              :group :lualine_augroup
+                              :pattern :LspProgressStatusUpdated})
+
