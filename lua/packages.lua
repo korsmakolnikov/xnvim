@@ -15,25 +15,20 @@ return lazy.setup(
       "udayvir-singh/hibiscus.nvim",
       "nvim-lua/plenary.nvim",
       {
-        'nvim-lualine/lualine.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        'echasnovski/mini.statusline',
+        version = '*',
+        dependencies = {
+          'echasnovski/mini.icons'
+        },
         config = function()
-          require('lualine').setup({
-            sections = {
-              lualine_c = {
-                function()
-                  return require('lsp-progress').progress()
-                end,
-              }
-            },
-          })
+          require('mini.statusline').setup()
         end
-
       },
       {
-        'linrongbin16/lsp-progress.nvim',
+        'echasnovski/mini.notify',
+        version = '*',
         config = function()
-          require('lsp-progress').setup()
+          require('mini.notify').setup()
         end
       },
       {
@@ -228,6 +223,6 @@ return lazy.setup(
         config = function()
           require('tabby').setup()
         end,
-      }
+      },
     }
   })

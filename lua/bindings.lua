@@ -53,15 +53,12 @@ wk.add(
     {
       "<Leader>f",
       group = "+File",
-      { "<Leader>ff", ts.find_files,    desc = "Search for files", },
-      { "<Leader>fg", ts.git_files,     desc = "Search for git files", },
-      { "<Leader>fh", ts.oldfiles,      desc = "History", },
-      { "<Leader>fy", ":let @+=@%<CR>", desc = "Yank file path" },
-      {
-        group = "+Oil",
-        { "<C-f><C-c>", ":lua require'oil_manager'.toggle_on_current_folder()<CR>", desc = "Oil current directory" },
-        { "<C-f><C-f>", ":lua require'oil_manager'.toggle_on_root_folder()<CR>",    desc = "Oil" },
-      }
+      { "<Leader>ff", ts.find_files,                                              desc = "Search for files", },
+      { "<Leader>fg", ts.git_files,                                               desc = "Search for git files", },
+      { "<Leader>fh", ts.oldfiles,                                                desc = "History", },
+      { "<Leader>fy", ":let @+=@%<CR>",                                           desc = "Yank file path" },
+      { "<Leader>fC", ":lua require'oil_manager'.toggle_on_current_folder()<CR>", desc = "Oil current directory" },
+      { "<Leader>fc", ":lua require'oil_manager'.toggle_on_root_folder()<CR>",    desc = "Oil" },
     },
 
     {
@@ -128,6 +125,22 @@ wk.add(
     },
 
     {
+      "<Leader>t",
+      group = "+Tab",
+      { "<Leader>tN", ":tabnew<CR>",       desc = "New tab" },
+      { "<Leader>tc", ":tabclose<CR>",     desc = "Close the current tab" },
+      { "<Leader>te", ":tabedit<CR>",      desc = "Open empty file in a new tab" },
+      { "<Leader>tn", ":tabnext<CR>",      desc = "Next tab" },
+      { "<Leader>tp", ":tabprevious<CR>",  desc = "Next tab" },
+      { "<Leader>tr", ":tabmove +1<CR>",   desc = "Move to the right" },
+      { "<Leader>tl", ":tabmove -1<CR>",   desc = "Move to the left" },
+      { "<Leader>tF", ":tabfirst<CR>",     desc = "Switch to first tab" },
+      { "<Leader>tL", ":tablast<CR>",      desc = "Switch to last tab" },
+      { "<Leader>tR", ":Tabby rename_tab", desc = "Rename tab" },
+      { "<Leader>tO", ":tabonly",          desc = "Close other tabs" },
+    },
+
+    {
       "<Leader>v",
       group = "+Vim",
       { "<Leader>vc", ts.commands,        desc = "Commands", },
@@ -180,19 +193,26 @@ wk.add(
     {
       "<Leader>G",
       group = "+Gitsigns",
-      { "<Leader>Ghs", gs.stage_hunk,                                                       desc = "Gitsigns stage hunk" },
-      { "<Leader>Ghr", gs.reset_hunk,                                                       desc = "Gitsigns reset hunk", },
-      { "<Leader>Ghr", function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, desc = "Gitsigns reset hunk",               mode = 'v' },
-      { "<Leader>Ghs", function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, desc = "Gitsigns stage hunk",               mode = 'v' },
-      { "<Leader>Ghu", gs.undo_stage_hunk,                                                  desc = "Gitsigns undo stage hunk" },
-      { "<Leader>Ghp", gs.preview_hunk,                                                     desc = "Gitsigns preview hunk" },
-      { "<Leader>Gbs", gs.stage_buffer,                                                     desc = "Gitsigns stage buffer" },
-      { "<Leader>Gbr", gs.reset_buffer,                                                     desc = "Gitsigns reset buffer" },
-      { "<Leader>Gd",  gs.diffthis,                                                         desc = "Gitsigns git diff" },
-      { "<Leader>GD",  function() gs.diffthis('~') end,                                     desc = "Gitsigns git diff" },
-      { "<Leader>GE",  gs.toggle_deleted,                                                   desc = "Gitsigns toggle deleted" },
-      { "<Leader>GlB", gs.toogle_current_line_blame,                                        desc = "Gitsigns toggle current line blame" },
-      { "<Leader>Glb", function() gs.blame_line { full = true } end,                        desc = "Gitsigns line blame" },
+      {
+        "<Leader>Gh",
+        group = "+Hunk",
+        { "<Leader>Ghs", gs.stage_hunk,                                                       desc = "Gitsigns stage hunk" },
+        { "<Leader>Ghr", gs.reset_hunk,                                                       desc = "Gitsigns reset hunk", },
+        { "<Leader>Ghr", function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, desc = "Gitsigns reset hunk",     mode = 'v' },
+        { "<Leader>Ghs", function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, desc = "Gitsigns stage hunk",     mode = 'v' },
+        { "<Leader>Ghu", gs.undo_stage_hunk,                                                  desc = "Gitsigns undo stage hunk" },
+        { "<Leader>Ghp", gs.preview_hunk,                                                     desc = "Gitsigns preview hunk" },
+      },
+      {
+        "<Leader>Gb",
+        group = "+Buffer",
+        { "<Leader>Gbs", gs.stage_buffer, desc = "Gitsigns stage buffer" },
+        { "<Leader>Gbr", gs.reset_buffer, desc = "Gitsigns reset buffer" },
+      },
+      { "<Leader>Gd", gs.diffthis,                                  desc = "Gitsigns git diff" },
+      { "<Leader>GD", function() gs.diffthis('~') end,              desc = "Gitsigns git diff" },
+      { "<Leader>GE", gs.toggle_deleted,                            desc = "Gitsigns toggle deleted" },
+      { "<Leader>Gl", function() gs.blame_line { full = true } end, desc = "Gitsigns line blame" },
     },
 
     {
@@ -208,6 +228,8 @@ wk.add(
       { "<Leader>sR", ":FzfLua live_grep_resume<CR>", desc = "Live grep resume" },
       { "<Leader>st", ":FzfLua tags_live_grep<CR>",   desc = "Live grep" },
     },
+
+    { "<Leader>S", ":mksession!<CR>", desc = "Replace session file" },
 
     {
       "<Leader>T",
