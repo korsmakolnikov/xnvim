@@ -114,7 +114,7 @@ return lazy.setup(
         end
 
       },
-      { "williamboman/mason.nvim", dependencies = { "williamboman/mason-lspconfig.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" },   config = _1_ },
+      { "williamboman/mason.nvim", dependencies = { "williamboman/mason-lspconfig.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" } },
       {
         "terrortylor/nvim-comment",
         config = function()
