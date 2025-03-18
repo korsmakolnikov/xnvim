@@ -21,7 +21,6 @@ require('mason-tool-installer').setup {
 
     -- you can turn off/on auto_update per tool
     -- { 'bash-language-server', auto_update = true },
-    'elixir-ls',
     'tree-sitter-cli',
     'bash-language-server',
     'bash-debug-adapter',
@@ -37,9 +36,6 @@ require('mason-tool-installer').setup {
     'shellcheck',
     'luacheck',
     'luaformatter',
-    'php-cs-fixer',
-    'php-debug-adapter',
-    'phpactor',
     'yaml-language-server',
     'yamlfmt',
     'yamllint',

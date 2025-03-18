@@ -8,7 +8,7 @@ local function lsp()
     ensure_installed = { "clangd", "clojure_lsp", "cmake", "diagnosticls", "docker_compose_language_service", "dockerls",
       "dotls", "elixirls", "elmls", "elp", "eslint",
       "gopls", "graphql", "helm_ls", "html", "intelephense", "jqls", "jsonls", "lexical", "lua_ls", "marksman",
-      "phpactor", "psalm", "rust_analyzer", "sqlls", "sqls", "vacuum", "vimls", "yamlls" }
+      "phpactor", "sqlls", "sqls", "vacuum", "vimls", "yamlls" }
   })
 end
 local function autodeps()
