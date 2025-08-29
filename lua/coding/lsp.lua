@@ -98,11 +98,7 @@ require 'lspconfig'.gopls.setup {
   },
 }
 
-require('go').setup({
-  lsp_inlay_hints = {
-    enable = false
-  }
-})
+require('go').setup({})
 
 
 require 'lspconfig'.ts_ls.setup {
@@ -117,15 +113,6 @@ require 'lspconfig'.rust_analyzer.setup {
   -- on_attach = on_attach,
   settings = {
     ['rust-analyzer'] = {
-      inlay_hints = {
-        closingBraceHints = {
-          enable = true,
-          minLines = 0,
-        },
-        typeHints = {
-          enable = true
-        },
-      },
       cargo = {
         extraArgs = { "--profile", "rust-analyzer" },
         extraEnv = { CARGO_PROFILE_RUST_ANALYZER_INHERITS = "dev" },
@@ -141,41 +128,6 @@ require 'lspconfig'.rust_analyzer.setup {
   }
 }
 
-local inlay_hints_default_configuration = {
-  inlay_hints = {
-    parameter_hints = {
-      show = true,
-      prefix = "<- ",
-      separator = ", ",
-      remove_colon_start = false,
-      remove_colon_end = true,
-    },
-    type_hints = {
-      -- type and other hints
-      show = true,
-      prefix = "",
-      separator = ", ",
-      remove_colon_start = false,
-      remove_colon_end = false,
-    },
-    only_current_line = false,
-    -- separator between types and parameter hints. Note that type hints are
-    -- shown before parameter
-    labels_separator = "  ",
-    -- whether to align to the length of the longest line in the file
-    max_len_align = false,
-    -- padding from the left if max_len_align is true
-    max_len_align_padding = 1,
-    -- highlight group
-    highlight = "LspInlayHint",
-    -- virt_text priority
-    priority = 0,
-  },
-  enabled_at_startup = true,
-  debug_mode = false,
-}
-
-require("lsp-inlayhints").setup(inlay_hints_default_configuration)
 require 'lspconfig'.cmake.setup {}
 
 require 'lspconfig.configs'.fennel_language_server = {

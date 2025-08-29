@@ -35,7 +35,6 @@ return lazy.setup(
         "neovim/nvim-lspconfig",
         dependencies = {
           "folke/neodev.nvim",
-          "lvimuser/lsp-inlayhints.nvim",
           "hrsh7th/nvim-cmp",
           "hrsh7th/cmp-nvim-lsp",
           "hrsh7th/cmp-path",
@@ -73,6 +72,8 @@ return lazy.setup(
           elixir.setup {
             nextls = { enable = true },
             elixirls = {
+              -- repo = "elixir-lsp/elixir-ls",
+              tag = "v0.20.0",
               enable = true,
               settings = elixirls.settings {
                 dialyzerEnabled = false,
@@ -122,7 +123,12 @@ return lazy.setup(
         end
       },
       { "nvim-neotest/neotest",    dependencies = { "nvim-neotest/nvim-nio", "nvim-lua/plenary.nvim", "antoinemadec/FixCursorHold.nvim" } },
-      "ray-x/go.nvim",
+      {
+        "ray-x/go.nvim",
+        dependencies = {
+          'theHamsta/nvim-dap-virtual-text'
+        }
+      },
       "ray-x/guihua.lua",
       "bfredl/nvim-luadev",
       "lewis6991/impatient.nvim",

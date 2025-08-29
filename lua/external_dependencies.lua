@@ -6,7 +6,7 @@ end
 local function lsp()
   return (require("mason-lspconfig")).setup({
     ensure_installed = { "clangd", "clojure_lsp", "cmake", "diagnosticls", "docker_compose_language_service", "dockerls",
-      "dotls", "elixirls", "elmls", "elp", "eslint",
+      "dotls", "elmls", "elp", "eslint",
       "gopls", "graphql", "helm_ls", "html", "intelephense", "jqls", "jsonls", "lexical", "lua_ls", "marksman",
       "phpactor", "sqlls", "sqls", "vacuum", "vimls", "yamlls" }
   })
