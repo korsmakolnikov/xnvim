@@ -17,7 +17,13 @@ wk.add(
       { "<C-c>s", ts.spell_suggest,              desc = "Spell suggestions" },
       {
         "<C-c>c",
-        function() ts.git_bcommits_range({ from = vim.fn.getpos("'<")[2], to = vim.fn.getpos("'>")[2] }) end,
+        function()
+          ts.git_bcommits_range({
+            from = vim.fn.getpos("'<")[2],
+            to = vim.fn.getpos(
+              "'>")[2]
+          })
+        end,
         desc = "Commits in range",
         mode = "v"
       },
