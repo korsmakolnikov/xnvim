@@ -76,5 +76,5 @@ require "coding.autocompletition"
 require "coding.on_attach"
 require "markdown"
 require "presentation"
-require "compiled.autogroups"
+require "autogroups"
 require "gitlinker".setup()
