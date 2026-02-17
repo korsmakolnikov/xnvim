@@ -29,7 +29,7 @@ vim.o.number = true
 vim.o.wildmode = 'longest,list'
 vim.o.syntax = 'on'
 vim.o.mouse = 'a'
-vim.o.clipboard = vim.o.clipboard .. 'unnamed,unnamedplus'
+vim.o.clipboard = 'unnamedplus'
 if vim.fn.has('wsl') == 1 then
   vim.g.clipboard = {
     name = 'WslClipboard',
