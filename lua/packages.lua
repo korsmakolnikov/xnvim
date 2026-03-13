@@ -37,6 +37,7 @@ return lazy.setup(
           "folke/neodev.nvim",
           "lvimuser/lsp-inlayhints.nvim",
           "hrsh7th/nvim-cmp",
+          "hrsh7th/cmp-vsnip",
           "hrsh7th/cmp-nvim-lsp",
           "hrsh7th/cmp-path",
           "hrsh7th/cmp-buffer",
@@ -137,32 +138,57 @@ return lazy.setup(
       "blueshirts/darcula",
       "rakr/vim-one",
       "navarasu/onedark.nvim",
-      { "junegunn/fzf",          build = "./install --bin" },
+      { "junegunn/fzf",                build = "./install --bin" },
       "ibhagwan/fzf-lua",
       "junegunn/goyo.vim",
-      { "mfussenegger/nvim-dap", dependencies = { "rcarriga/nvim-dap-ui", "mxsdev/nvim-dap-vscode-js" } },
       {
-        "L3MON4D3/LuaSnip",
-        version = "v2.*",
-        build = "make install_jsregexp",
-        dependencies = { "saadparwaiz1/cmp_luasnip", "honza/vim-snippets" },
+        "mfussenegger/nvim-dap",
+        dependencies = { "rcarriga/nvim-dap-ui", "mxsdev/nvim-dap-vscode-js" },
         config = function()
-          local ls = require("luasnip")
+          local dap = require("dap")
 
-          vim.keymap.set({ "i" }, "<C-K>", function() ls.expand() end, { silent = true })
-          vim.keymap.set({ "i", "s" }, "<C-L>", function() ls.jump(1) end, { silent = true })
-          vim.keymap.set({ "i", "s" }, "<C-J>", function() ls.jump(-1) end, { silent = true })
+          dap.adapters.cppdbg = {
+            type = 'executable',
+            command = 'OpenDebugAD7',
+            name = 'cppdbg',
+          }
 
-          vim.keymap.set({ "i", "s" }, "<C-E>", function()
-            if ls.choice_active() then
-              ls.change_choice(1)
-            end
-          end, { silent = true })
-          vim.keymap.set({ "i", "s" }, "<C-S-E>", function() require("luasnip.loaders").edit_snippet_files() end,
-            { silent = true })
+          dap.configurations.c = {
+            {
+              name = "Debug",
+              type = "cppdbg",
+              request = "launch",
+              program = function()
+                local default_name = 'main'
+                local name = vim.fn.input('Name of executable: ', default_name, 'file') -- salva il risultato
+                local executable_path = vim.fn.getcwd() .. '/build/' .. name
+                return executable_path
+              end,
+              cwd = '${workspaceFolder}',
+              stopOnEntry = false,
+              args = {},
+              setupCommands = {
+                {
+                  text = '-enable-pretty-printing',
+                  description = 'enable pretty printing',
+                  ignoreFailures = false
+                }
+              },
+            },
+          }
 
-          require("luasnip.loaders.from_snipmate").lazy_load({ paths = "~/.config/nvim/snippets" })
+          dap.configurations.cpp = dap.configurations.c
         end
+      },
+      { "rcarriga/nvim-dap-ui",        config = function() require("dapui").setup() end },
+      { "rafamadriz/friendly-snippets" },
+
+      {
+        "hrsh7th/vim-vsnip",
+        dependencies = { "friendly-snippets" },
+        config = function()
+          vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/snippets"
+        end,
       },
       {
         'nvim-telescope/telescope.nvim',
