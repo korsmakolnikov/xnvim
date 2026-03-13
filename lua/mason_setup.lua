@@ -25,7 +25,6 @@ require('mason-tool-installer').setup {
     'bash-language-server',
     'bash-debug-adapter',
     'bzl',
-    'lua-language-server',
     'graphql-language-service-cli',
     'jq',
     'jq-lsp',
