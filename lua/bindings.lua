@@ -171,14 +171,20 @@ wk.add(
     {
       "<Leader>d",
       group = "+Debug",
-      { "<Leader>dB", dap.toggle_breakpoint(),             desc = "Toggle breakpoint" },
-      { "<Leader>dC", dap.continue(),                      desc = "Dap continue" },
+      { "<Leader>dB", dap.toggle_breakpoint,               desc = "Toggle breakpoint" },
+      { "<Leader>dC", dap.continue,                        desc = "Dap continue" },
       { "<Leader>dR", ":lua require'dap'.repl.open()<CR>", desc = "REPL" },
       { "<Leader>db", ":FzfLua dap_breakpoints<CR>",       desc = "List breakpoints" },
       { "<Leader>dc", ":FzfLua dap_commands<CR>",          desc = "DAP commands" },
       { "<Leader>df", ":FzfLua dap_frames<CR>",            desc = "Active session jump to frame" },
       { "<Leader>do", ":FzfLua dap_configurations<CR>",    desc = "DAP configurations" },
-      { "<Leader>dv", ":FzfLua dap_variables<CR>",         desc = "Active session variables" }
+      { "<Leader>dv", ":FzfLua dap_variables<CR>",         desc = "Active session variables" },
+      { "<Leader>dS", dap.step_over,                       desc = "Step Over" },
+      { "<Leader>ds", dap.step_into,                       desc = "Step Into" },
+      { "<Leader>dO", dap.step_out,                        desc = "Step Out" },
+      { "<Leader>dL", dap.run_last,                        desc = "Run Last" },
+      { "<Leader>dx", dap.repl_open,                       desc = "Repl" },
+
     },
 
     {
@@ -275,6 +281,10 @@ wk.add(
       { "<Leader>e<Space>", "<cmd>Trouble diagnostics toggle focus=false filter.buf=0 win.position=top<CR>", desc = "Trouble diagnostics buffer" },
       { "<Leader>ew",       "<cmd>Trouble diagnostics toggle focus=false win.position=top<CR>",              desc = "Trouble diagnostics buffer" },
       { "<Leader>em",       "<cmd>Trouble<CR>",                                                              desc = "Trouble menu" },
+    },
+    {
+      "<Leader>a",
+      group = "+AI",
     }
   }
 )
