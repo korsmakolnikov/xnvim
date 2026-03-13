@@ -272,6 +272,32 @@ return lazy.setup(
         "folke/trouble.nvim",
         opts = {}, -- for default options, refer to the configuration section for custom setup.
         cmd = "Trouble",
-      }
+      },
+
+      -- AI
+      {
+        "zbirenbaum/copilot.lua",
+        lazy = false,
+        event = "VeryLazy",
+        config = function()
+          require('copilot').setup({
+            suggestion = {
+              enabled = true,
+              auto_trigger = true,
+              debounce = 75,
+              keymap = {
+                accept = "<C-l>",
+                accept_word = false,
+                accept_line = false,
+                next = "<M-}>",
+                prev = "<M-{>",
+                dismiss = "<C-]>",
+              },
+            },
+          })
+        end,
+      },
+
+
     }
   })
