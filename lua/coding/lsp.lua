@@ -33,9 +33,9 @@ local servers = {
     },
   },
   clangd = {
-    cmd = { "clangd" },
-    filetypes = { "c", "cpp", "objc", "objcpp" },
-    root_markers = { "compile_commands.json", "compile_flags.txt", ".git" },
+    cmd = { "clangd", "--background-index", "--clang-tidy", "--log=verbose", "--completion-style=detailed", "--header-insertion-decorators", "--header-insertion=iwyu", "--pch-storage=memory", },
+    filetypes = { "c", "cpp", "objc", "objcpp", "h", "hpp" },
+    root_markers = { ".clang-tidy", "CMakeLists.txt", "compile_commands.json", "compile_flags.txt", ".git" },
   },
   jsonls = {
     cmd = { "vscode-json-languageserver", "--stdio" },
