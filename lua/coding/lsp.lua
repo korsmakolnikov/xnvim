@@ -154,7 +154,6 @@ local servers = {
 for name, opts in pairs(servers) do
   local cfg = vim.tbl_extend("force", {
     capabilities = capabilities,
-    on_attach = on_attach,
   }, opts)
 
   -- Registra/estendi la config corretta: primo argomento = stringa nome
