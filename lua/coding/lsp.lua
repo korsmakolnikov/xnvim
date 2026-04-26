@@ -6,6 +6,17 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 local servers = {
+  pyright = {
+    settings = {
+      python = {
+        analyses = {
+          typeCheckingMode = "strict",
+        }
+      }
+    }
+  },
+  ruff = {
+  },
   gopls = {
     cmd = { "gopls" },
     filetypes = { "go" },
@@ -168,6 +179,5 @@ require('go').setup({
     enable = false
   }
 })
-
 
 require 'coding.custom_formatters'.init()
