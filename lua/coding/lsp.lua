@@ -2,27 +2,20 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
   command = "lua vim.lsp.buf.format()",
 })
-local function get_python_path()
-  local cwd = vim.loop.cwd()
-  local python = cwd .. "/.venv/bin/python"
-
-  if vim.loop.fs_stat(python) then
-    return python
-  end
-
-  return "python3"
-end
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.general.positionEncodings = { "utf-16" }
 
 local servers = {
   pyright = {
+    before_init = function(_, config)
+      local venv = config.root_dir .. "/.venv/bin/python"
+      if vim.fn.executable(venv) == 1 then
+        config.settings.python.pythonPath = venv
+      end
+    end,
     settings = {
       python = {
-        pythonPath = get_python_path(),
-        venvPath = ".",
-        venv = ".venv",
-        analyses = {
+        analysis = {
           typeCheckingMode = "strict",
         }
       }

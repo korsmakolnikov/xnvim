@@ -5,6 +5,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 
 vim.opt.rtp:prepend(lazypath)
+-- needed for local .nvim.lua files
+vim.o.exrc = true
+vim.o.secure = true
 
 require 'packages'
 require 'impatient'
