@@ -1,10 +1,4 @@
 local lazy = require("lazy")
-local function _1_()
-  local d = require("external_dependencies")
-  d.setup()
-  return d.lsp()
-end
-
 return lazy.setup(
   {
     install = { colorscheme = { "habamax" } },
@@ -53,7 +47,7 @@ return lazy.setup(
       {
         "nvim-treesitter/nvim-treesitter",
         config = function()
-          require 'nvim-treesitter'.setup {
+          require 'nvim-treesitter.configs'.setup {
             sync_install = false,
             auto_install = true,
             additional_vim_regex_highlighting = false,
@@ -150,18 +144,24 @@ return lazy.setup(
           local ls = require("luasnip")
 
           vim.keymap.set({ "i" }, "<C-K>", function() ls.expand() end, { silent = true })
-          vim.keymap.set({ "i", "s" }, "<C-L>", function() ls.jump(1) end, { silent = true })
-          vim.keymap.set({ "i", "s" }, "<C-J>", function() ls.jump(-1) end, { silent = true })
+          vim.keymap.set({ "i", "s" }, "<C-L>", function() ls.jump(1) end,
+            { silent = true })
+          vim.keymap.set({ "i", "s" }, "<C-J>", function() ls.jump(-1) end,
+            { silent = true })
 
           vim.keymap.set({ "i", "s" }, "<C-E>", function()
             if ls.choice_active() then
               ls.change_choice(1)
             end
           end, { silent = true })
-          vim.keymap.set({ "i", "s" }, "<C-S-E>", function() require("luasnip.loaders").edit_snippet_files() end,
+          vim.keymap.set({ "i", "s" }, "<C-S-E>",
+            function() require("luasnip.loaders").edit_snippet_files() end,
             { silent = true })
 
-          require("luasnip.loaders.from_snipmate").lazy_load({ paths = "~/.config/nvim/snippets" })
+          require("luasnip.loaders.from_snipmate").lazy_load({
+            paths =
+            "~/.config/nvim/snippets"
+          })
         end
       },
       {
@@ -276,5 +276,55 @@ return lazy.setup(
           })
         end,
       },
+      {
+        "yetone/avante.nvim",
+        event = "VeryLazy",
+        lazy = false,
+        version = false, -- È consigliato usare false per avere le ultime feature
+        opts = {
+          provider = "copilot",
+          providers = {
+            copilot = {
+              endpoint = "https://api.githubcopilot.com",
+              model = "claude-haiku-4.5",
+              proxy = nil,
+              allow_insecure = false,
+              timeout = 30000, -- ms
+              temperature = 0,
+              extra_request_body = {
+                max_tokens = 4096,
+              }
+            },
+          },
+          auto_suggestions_provider = "copilot", -- Usa Copilot anche per i suggerimenti
+        },
+        build = "make",                          -- Necessario per compilare le dipendenze
+        dependencies = {
+          "nvim-treesitter/nvim-treesitter",
+          "stevearc/dressing.nvim",
+          "nvim-lua/plenary.nvim",
+          "MunifTanjim/nui.nvim",
+          --- I due pezzi fondamentali per Copilot:
+          "zbirenbaum/copilot.lua",
+          {
+            -- Supporto per le icone e il rendering markdown
+            "MeanderingProgrammer/render-markdown.nvim",
+            opts = { file_types = { "markdown", "Avante" } },
+            ft = { "markdown", "Avante" },
+          },
+        },
+        config = function(_, opts)
+          require("avante").setup(opts)
+
+          local wk = require("which-key")
+          wk.add({
+            { "<leader>z",  group = "Avante (AI)" },
+            { "<leader>za", "<cmd>AvanteAsk<cr>",     desc = "Chiedi ad Avante (Chat)", mode = { "n", "v" } },
+            { "<leader>ze", "<cmd>AvanteEdit<cr>",    desc = "Edit rapido",             mode = "v" },
+            { "<leader>zr", "<cmd>AvanteRefresh<cr>", desc = "Refresh Avante" },
+            { "<leader>zf", "<cmd>AvanteFocus<cr>",   desc = "Focus sulla finestra AI" },
+          })
+        end,
+      }
     }
   })
