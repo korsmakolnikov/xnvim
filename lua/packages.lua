@@ -56,43 +56,43 @@ return lazy.setup(
           }
         end
       },
-      {
-        "elixir-tools/elixir-tools.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        version = "*",
-        config = function()
-          local elixir = require("elixir")
-          local elixirls = require("elixir.elixirls")
-
-          elixir.setup {
-            nextls = { enable = true },
-            elixirls = {
-              enable = true,
-              settings = elixirls.settings {
-                dialyzerEnabled = false,
-                fetchDeps = false,
-                enableTestLenses = false,
-                suggestSpecs = true,
-              },
-              on_attach = function(client, bufnr)
-                local wk = require("which-key")
-                wk.add({
-                  {
-                    "<Leader>E",
-                    group = "+Elixir",
-                    { "<Leader>Ep", ":ElixirFromPipe<cr>",    desc = "From Pipe", },
-                    { "<Leader>EP", ":ElixirToPipe<cr>",      desc = "To Pipe", },
-                    { "<Leader>Em", ":ElixirExpandMacro<cr>", desc = "Expand Macro", },
-                  }
-                })
-              end,
-            },
-            projectionist = {
-              enable = true
-            }
-          }
-        end
-      },
+      -- {
+      --   "elixir-tools/elixir-tools.nvim",
+      --   dependencies = { "nvim-lua/plenary.nvim" },
+      --   version = "*",
+      --   config = function()
+      --     local elixir = require("elixir")
+      --     local elixirls = require("elixir.elixirls")
+      --
+      --     elixir.setup {
+      --       nextls = { enable = true },
+      --       elixirls = {
+      --         enable = true,
+      --         settings = elixirls.settings {
+      --           dialyzerEnabled = false,
+      --           fetchDeps = false,
+      --           enableTestLenses = false,
+      --           suggestSpecs = true,
+      --         },
+      --         on_attach = function(client, bufnr)
+      --           local wk = require("which-key")
+      --           wk.add({
+      --             {
+      --               "<Leader>E",
+      --               group = "+Elixir",
+      --               { "<Leader>Ep", ":ElixirFromPipe<cr>",    desc = "From Pipe", },
+      --               { "<Leader>EP", ":ElixirToPipe<cr>",      desc = "To Pipe", },
+      --               { "<Leader>Em", ":ElixirExpandMacro<cr>", desc = "Expand Macro", },
+      --             }
+      --           })
+      --         end,
+      --       },
+      --       projectionist = {
+      --         enable = true
+      --       }
+      --     }
+      --   end
+      -- },
       {
         "hrsh7th/nvim-cmp",
         event = { "InsertEnter", "CmdlineEnter" },
