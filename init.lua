@@ -21,6 +21,7 @@ set.tabstop = 2
 set.shiftwidth = 2
 set.softtabstop = 2
 set.expandtab = true
+vim.bo.expandtab = true
 vim.wo.wrap = false
 set.termguicolors = true
 vim.o.cc = '80'
