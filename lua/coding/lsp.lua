@@ -165,6 +165,11 @@ local servers = {
       },
     },
   },
+  elm = {
+    cmd = { "elm-language-server" },
+    filetypes = { "elm" },
+    root_markers = { "elm.json", ".git" },
+  },
 }
 
 for name, opts in pairs(servers) do
