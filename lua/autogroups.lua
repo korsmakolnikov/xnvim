@@ -30,3 +30,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end
 })
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*",
+  callback = function(args)
+    -- Controlla se Neovim ha un parser Tree-sitter valido per questo tipo di file
+    local ft = vim.bo[args.buf].filetype
+    local has_parser = pcall(vim.treesitter.get_parser, args.buf, ft)
+
+    if has_parser and ft ~= "" then
+      vim.treesitter.start(args.buf)
+    end
+  end,
+})

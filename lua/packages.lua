@@ -26,35 +26,37 @@ return lazy.setup(
         end
       },
       {
-        "neovim/nvim-lspconfig",
-        dependencies = {
-          "folke/neodev.nvim",
-          "lvimuser/lsp-inlayhints.nvim",
-          "hrsh7th/nvim-cmp",
-          "hrsh7th/cmp-nvim-lsp",
-          "hrsh7th/cmp-path",
-          "hrsh7th/cmp-buffer",
-          "hrsh7th/cmp-cmdline",
-          "f3fora/cmp-spell",
-          "ray-x/cmp-treesitter",
-          "onsails/lspkind.nvim",
-          "amarakon/nvim-cmp-buffer-lines",
-          "nvim-lua/lsp-status.nvim",
-          "hrsh7th/cmp-nvim-lua",
-          "dmitmel/cmp-cmdline-history",
-          { "antosha417/nvim-lsp-file-operations", config = true } }
+        "hrsh7th/nvim-cmp"
       },
       {
-        "nvim-treesitter/nvim-treesitter",
-        config = function()
-          require 'nvim-treesitter.configs'.setup {
-            sync_install = false,
-            auto_install = true,
-            additional_vim_regex_highlighting = false,
-            highlight = { enable = true },
-            indent = { enable = true }
-          }
-        end
+        "hrsh7th/cmp-nvim-lsp"
+      },
+      {
+        "hrsh7th/cmp-path"
+      },
+      {
+        "hrsh7th/cmp-buffer"
+      },
+      {
+        "hrsh7th/cmp-cmdline"
+      },
+      {
+        "f3fora/cmp-spell"
+      },
+      {
+        "ray-x/cmp-treesitter"
+      },
+      {
+        "amarakon/nvim-cmp-buffer-lines"
+      },
+      {
+        "hrsh7th/cmp-nvim-lua"
+      },
+      {
+        "dmitmel/cmp-cmdline-history"
+      },
+      {
+        "onsails/lspkind.nvim"
       },
       -- {
       --   "elixir-tools/elixir-tools.nvim",
@@ -275,6 +277,6 @@ return lazy.setup(
             },
           })
         end,
-      }
+      },
     }
   })

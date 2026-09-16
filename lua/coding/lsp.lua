@@ -152,16 +152,16 @@ local servers = {
           importGranularity = "module",
           importPrefix = "by_self",
         },
-        inlayHints = {
-          bindingModeHints = true,
-          chainingHints = true,
-          closingBraceHints = {
-            enable = true,
-            minLines = 25,
-          },
-          parameterHints = true,
-          typeHints = true,
-        },
+        -- inlayHints = {
+        --   bindingModeHints = true,
+        --   chainingHints = true,
+        --   closingBraceHints = {
+        --     enable = true,
+        --     minLines = 25,
+        --   },
+        --   parameterHints = true,
+        --   typeHints = true,
+        -- },
       },
     },
   },
@@ -186,9 +186,9 @@ for name, opts in pairs(servers) do
 end
 
 require('go').setup({
-  lsp_inlay_hints = {
-    enable = false
-  }
+  -- lsp_inlay_hints = {
+  --   enable = false
+  -- }
 })
 
 vim.lsp.config('dexter', {
