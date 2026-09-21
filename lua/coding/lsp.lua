@@ -7,6 +7,9 @@ capabilities.general.positionEncodings = { "utf-16" }
 
 local servers = {
   pyright = {
+    cmd = { "pyright-langserver", "--stdio" },
+    filetypes = { "python" },
+    root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "pyrightconfig.json", ".git" },
     before_init = function(_, config)
       local venv = config.root_dir .. "/.venv/bin/python"
       if vim.fn.executable(venv) == 1 then
@@ -22,6 +25,9 @@ local servers = {
     }
   },
   ruff = {
+    cmd = { "ruff", "server" },
+    filetypes = { "python" },
+    root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
   },
   gopls = {
     cmd = { "gopls" },
