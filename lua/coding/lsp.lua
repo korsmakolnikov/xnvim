@@ -56,7 +56,7 @@ local servers = {
   },
   jsonls = {
     cmd = { "vscode-json-languageserver", "--stdio" },
-    filetypes = { "json" },
+    filetypes = { "json", "avsc" },
     root_markers = { ".git" },
   },
   lua_ls = {

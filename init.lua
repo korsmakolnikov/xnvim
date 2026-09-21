@@ -7,6 +7,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 -- needed for local .nvim.lua files
 vim.o.exrc = true
+vim.opt.exrc = true
 vim.o.secure = true
 
 require 'packages'

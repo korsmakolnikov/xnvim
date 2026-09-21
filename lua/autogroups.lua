@@ -30,6 +30,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end
 })
+
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = "*",
   callback = function(args)
@@ -41,4 +42,22 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
       vim.treesitter.start(args.buf)
     end
   end,
+})
+
+
+local format_group = vim.api.nvim_create_augroup("AutoRetabPython", { clear = true })
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = format_group,
+  pattern = "*.py", -- Si attiva SOLO sui file Python
+  callback = function()
+    -- Assicurati che expandtab sia attivo per il buffer corrente
+    vim.opt_local.expandtab = true
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+
+    -- Esegue il retab silenziosamente prima di salvare
+    vim.cmd("retab")
+  end,
+  desc = "Converte automaticamente i tab in spazi salvando file Python",
 })
