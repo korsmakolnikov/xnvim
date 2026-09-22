@@ -37,6 +37,13 @@ wk.add(
         group = "+Coding helpers",
         { "<C-c>hh", "<cmd>lua vim.lsp.buf.hover()<CR>",          desc = "Lsp hover", },
         { "<C-c>hH", "<cmd>lua vim.lsp.buf.signature_help()<CR>", desc = "Signature help" },
+        {
+          "<C-c>hi",
+          function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
+          end,
+          desc = "Toggle inlay hints"
+        },
       },
 
       {

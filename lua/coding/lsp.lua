@@ -1,6 +1,6 @@
--- Format on save is wired per-buffer from the LspAttach handler in
--- `lua/autogroups.lua`, which only registers it for clients that actually
--- advertise `textDocument/formatting`.
+-- Format on save and inlay hints are wired per-buffer from the LspAttach
+-- handler in `lua/autogroups.lua`, which only enables each feature for clients
+-- that actually advertise the matching capability.
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.general.positionEncodings = { "utf-16" }
 
@@ -190,9 +190,13 @@ for name, opts in pairs(servers) do
 end
 
 require('go').setup({
-  -- lsp_inlay_hints = {
-  --   enable = false
-  -- }
+  -- go.nvim would otherwise call `vim.lsp.inlay_hint.enable(true)` globally,
+  -- turning hints on for every buffer regardless of filetype or client support.
+  -- Inlay hints are wired per-buffer from the LspAttach handler in
+  -- `lua/autogroups.lua` instead.
+  lsp_inlay_hints = {
+    enable = false,
+  },
 })
 
 vim.lsp.config('dexter', {
