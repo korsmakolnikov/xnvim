@@ -5,8 +5,6 @@ return lazy.setup(
     checker = { enabled = true },
     spec = {
       "acro5piano/nvim-format-buffer",
-      "udayvir-singh/tangerine.nvim",
-      "udayvir-singh/hibiscus.nvim",
       "nvim-lua/plenary.nvim",
       {
         'echasnovski/mini.statusline',
@@ -217,11 +215,6 @@ return lazy.setup(
         "folke/trouble.nvim",
         opts = {}, -- for default options, refer to the configuration section for custom setup.
         cmd = "Trouble",
-      },
-
-      -- formatters
-      {
-        "stevearc/conform.nvim",
       },
     }
   })
