@@ -69,6 +69,25 @@ _G.Original_folder = vim.loop.cwd()
 vim.o.showtabline = 2
 vim.opt.sessionoptions = 'curdir,folds,globals,help,tabpages,terminal,winsize'
 
+require('nvim-treesitter').setup {
+  -- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
+  install_dir = vim.fn.stdpath('data') .. '/site'
+}
+
+-- Parsers kept installed for the languages this configuration targets.
+-- The `main` branch of nvim-treesitter has no `ensure_installed` option, so the
+-- list is installed explicitly; already installed parsers are skipped.
+_G.Treesitter_languages = {
+  "asm", "bash", "c", "cmake", "cpp", "eex", "elixir", "elm", "go", "gomod",
+  "haskell", "heex", "html", "javascript", "json", "lua", "make", "markdown",
+  "markdown_inline", "php", "python", "query", "rust", "toml", "tsx",
+  "typescript", "vim", "vimdoc", "yaml",
+}
+
+vim.api.nvim_create_user_command("TSEnsureInstalled", function()
+  require("nvim-treesitter").install(_G.Treesitter_languages)
+end, { desc = "Install every Tree-sitter parser used by this configuration" })
+
 require "visual.theme"
 require "neovide"
 require "oil_manager"

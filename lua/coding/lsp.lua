@@ -1,7 +1,6 @@
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  command = "lua vim.lsp.buf.format()",
-})
+-- Format on save is wired per-buffer from the LspAttach handler in
+-- `lua/autogroups.lua`, which only registers it for clients that actually
+-- advertise `textDocument/formatting`.
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.general.positionEncodings = { "utf-16" }
 
@@ -181,7 +180,6 @@ local servers = {
 for name, opts in pairs(servers) do
   local cfg = vim.tbl_extend("force", {
     capabilities = capabilities,
-    on_attach = on_attach,
   }, opts)
 
   -- Registra/estendi la config corretta: primo argomento = stringa nome

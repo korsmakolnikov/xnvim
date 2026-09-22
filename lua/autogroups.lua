@@ -9,19 +9,21 @@ vim.api.nvim_create_autocmd("BufEnter",
 vim.api.nvim_create_autocmd("BufEnter",
   { command = ":set autoindent noexpandtab tabstop=8 shiftwidth=8", pattern = { "*.c", "*.h", "*.cpp", "*.hpp", "*.go" } })
 
+local lsp_format_group = vim.api.nvim_create_augroup('my.lsp.format', { clear = true })
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('my.lsp', {}),
 
   callback = function(args)
-    local opts = { remap = false }
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-    local builtin = require("telescope.builtin")
-
-    -- along with your other config
 
     if client:supports_method('textDocument/formatting') then
-      -- the most important part
+      -- Drop any handler left over from a previous attach on this buffer so a
+      -- server restart cannot stack duplicate format-on-save passes.
+      vim.api.nvim_clear_autocmds({ group = lsp_format_group, buffer = args.buf })
+
       vim.api.nvim_create_autocmd('BufWritePre', {
+        group = lsp_format_group,
         buffer = args.buf,
         callback = function()
           vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 5000 })
@@ -31,17 +33,27 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end
 })
 
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = "*",
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("TreesitterHighlight", { clear = true }),
   callback = function(args)
-    -- Controlla se Neovim ha un parser Tree-sitter valido per questo tipo di file
     local ft = vim.bo[args.buf].filetype
-    local has_parser = pcall(vim.treesitter.get_parser, args.buf, ft)
-
-    if has_parser and ft ~= "" then
-      vim.treesitter.start(args.buf)
+    if ft == "" then
+      return
     end
+
+    local lang = vim.treesitter.language.get_lang(ft)
+    if not lang then
+      return
+    end
+
+    local installed = require("nvim-treesitter.config").get_installed("parsers")
+    if not vim.tbl_contains(installed, lang) then
+      return
+    end
+
+    pcall(vim.treesitter.start, args.buf, lang)
   end,
+  desc = "Enable Tree-sitter highlighting whenever a parser is available",
 })
 
 
