@@ -24,7 +24,8 @@ return lazy.setup(
         end
       },
       {
-        "hrsh7th/nvim-cmp"
+        "hrsh7th/nvim-cmp",
+        event = { "InsertEnter", "CmdlineEnter" },
       },
       {
         "hrsh7th/cmp-nvim-lsp"
@@ -134,6 +135,11 @@ return lazy.setup(
         end
       },
       {
+        'nvim-treesitter/nvim-treesitter',
+        lazy = false,
+        build = ':TSUpdate',
+      },
+      {
         'nvim-telescope/telescope.nvim',
         config = function()
           require('telescope').setup({
@@ -182,22 +188,6 @@ return lazy.setup(
           require('mini.icons').setup()
         end
       },
-      { 'tlaplus-community/tlaplus-nvim-plugin' },
-      {
-        "susliko/tla.nvim",
-        config = function()
-          local java_executable = '/usr/bin/java';
-          if vim.fn.has('wsl') == 1 then
-            java_executable = '/usr/sbin/java'
-          end
-
-          require("tla").setup(
-            {
-              java_executable = java_executable
-            }
-          )
-        end
-      },
       {
         'lewis6991/gitsigns.nvim',
         config = function()
@@ -215,6 +205,10 @@ return lazy.setup(
         "folke/trouble.nvim",
         opts = {}, -- for default options, refer to the configuration section for custom setup.
         cmd = "Trouble",
+      },
+      -- formatters
+      {
+        "stevearc/conform.nvim",
       },
     }
   })
