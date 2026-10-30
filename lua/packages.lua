@@ -89,7 +89,6 @@ return lazy.setup(
       "ray-x/go.nvim",
       "ray-x/guihua.lua",
       "bfredl/nvim-luadev",
-      "lewis6991/impatient.nvim",
       "stevearc/oil.nvim",
       { "SirZenith/oil-vcs-status", dependencies = { "stevearc/oil.nvim" } },
       { "ruifm/gitlinker.nvim",     dependencies = { "stevearc/oil.nvim" } },

@@ -157,16 +157,6 @@ local servers = {
           importGranularity = "module",
           importPrefix = "by_self",
         },
-        -- inlayHints = {
-        --   bindingModeHints = true,
-        --   chainingHints = true,
-        --   closingBraceHints = {
-        --     enable = true,
-        --     minLines = 25,
-        --   },
-        --   parameterHints = true,
-        --   typeHints = true,
-        -- },
       },
     },
   },

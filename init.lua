@@ -11,7 +11,6 @@ vim.opt.exrc = true
 vim.o.secure = true
 
 require 'packages'
-require 'impatient'
 
 vim.g.mapleader = ","
 vim.opt.matchpairs = vim.bo.matchpairs .. ",<:>"
@@ -92,7 +91,6 @@ require "visual.theme"
 require "neovide"
 require "oil_manager"
 require "lib"
-require "visual.lualine"
 require "mason_setup"
 require "coding.lsp"
 require "coding.dap"
