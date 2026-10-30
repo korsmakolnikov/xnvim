@@ -35,6 +35,8 @@ require('mason-tool-installer').setup {
     'luacheck',
     'luaformatter',
     'lua-language-server',
+    'pyright',
+    'ruff',
     'shellcheck',
     'shfmt',
     'stylua',
