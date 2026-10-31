@@ -128,6 +128,9 @@ function M.setup()
         group = "+Buffer Nav",
         { "<S-Tab>", ":bp<CR>", desc = "Previous buffer" },
         { "<Tab>",   ":bn<CR>", desc = "Next buffer" },
+        -- a terminal with the kitty keyboard protocol tells <C-i> from <Tab>,
+        -- but nvim folds it back into <Tab> unless <C-i> has its own map
+        { "<C-i>",   "<C-i>",   desc = "Jump forward" },
       },
     },
 
@@ -317,7 +320,6 @@ function M.setup()
     {
       group = "+Snippets",
       mode = { "i", "s" },
-      { "<C-K>",   function() require("luasnip").expand() end,  desc = "Expand snippet", mode = "i" },
       { "<C-L>",   function() require("luasnip").jump(1) end,   desc = "Next snippet node" },
       { "<C-J>",   function() require("luasnip").jump(-1) end,  desc = "Previous snippet node" },
       {
