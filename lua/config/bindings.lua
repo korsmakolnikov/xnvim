@@ -128,6 +128,9 @@ function M.setup()
         group = "+Buffer Nav",
         { "<S-Tab>", ":bp<CR>", desc = "Previous buffer" },
         { "<Tab>",   ":bn<CR>", desc = "Next buffer" },
+        -- a terminal with the kitty keyboard protocol tells <C-i> from <Tab>,
+        -- but nvim folds it back into <Tab> unless <C-i> has its own map
+        { "<C-i>",   "<C-i>",   desc = "Jump forward" },
       },
     },
 
