@@ -22,6 +22,8 @@ require('mason-tool-installer').setup {
     -- you can turn off/on auto_update per tool
     -- { 'bash-language-server', auto_update = true },
     'bash-debug-adapter',
+    'codelldb',
+    'debugpy',
     'bash-language-server',
     'docker-compose-language-service',
     'dockerfile-language-server',

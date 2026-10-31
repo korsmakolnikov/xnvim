@@ -8,6 +8,17 @@ function M.setup()
   local wk = require("which-key")
   local ts = require("telescope.builtin")
 
+  local function debug_test()
+    local ft = vim.bo.filetype
+    if ft == "go" then
+      require("dap-go").debug_test()
+    elseif ft == "python" then
+      require("dap-python").test_method()
+    else
+      vim.notify("No test debugging for " .. ft, vim.log.levels.WARN)
+    end
+  end
+
   wk.add({
     {
       "<C-c>",
@@ -176,15 +187,29 @@ function M.setup()
     {
       "<Leader>d",
       group = "+Debug",
-      { "<Leader>dB", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
-      { "<Leader>dC", function() require("dap").continue() end,          desc = "Dap continue" },
-      { "<Leader>dR", ":lua require'dap'.repl.open()<CR>", desc = "REPL" },
-      { "<Leader>db", ":FzfLua dap_breakpoints<CR>",       desc = "List breakpoints" },
-      { "<Leader>dc", ":FzfLua dap_commands<CR>",          desc = "DAP commands" },
-      { "<Leader>df", ":FzfLua dap_frames<CR>",            desc = "Active session jump to frame" },
-      { "<Leader>do", ":FzfLua dap_configurations<CR>",    desc = "DAP configurations" },
-      { "<Leader>dv", ":FzfLua dap_variables<CR>",         desc = "Active session variables" },
-      { "<M-k>",      function() require("dapui").eval() end, desc = "Evaluate expression" },
+      { "<Leader>dB", function() require("dap").toggle_breakpoint() end,                                 desc = "Toggle breakpoint" },
+      { "<Leader>dI", function() require("dap").set_breakpoint(vim.fn.input("Condition: ")) end,         desc = "Conditional breakpoint" },
+      { "<Leader>dL", function() require("dap").set_breakpoint(nil, nil, vim.fn.input("Log: ")) end,     desc = "Log point" },
+      { "<Leader>dC", function() require("dap").continue() end,                                          desc = "Start / continue" },
+      { "<Leader>dn", function() require("dap").step_over() end,                                         desc = "Step over" },
+      { "<Leader>di", function() require("dap").step_into() end,                                         desc = "Step into" },
+      { "<Leader>dO", function() require("dap").step_out() end,                                          desc = "Step out" },
+      { "<Leader>dl", function() require("dap").run_last() end,                                          desc = "Run last" },
+      { "<Leader>dT", function() require("dap").terminate() end,                                         desc = "Terminate" },
+      { "<Leader>dt", debug_test,                                                                        desc = "Debug test under cursor" },
+      { "<Leader>dU", function() require("dapui").toggle() end,                                          desc = "Toggle debug UI" },
+      { "<Leader>dh", function() require("dap.ui.widgets").hover() end,                                  desc = "Inspect value under cursor" },
+      { "<Leader>dR", ":lua require'dap'.repl.open()<CR>",                                               desc = "REPL" },
+      { "<Leader>db", ":FzfLua dap_breakpoints<CR>",                                                     desc = "List breakpoints" },
+      { "<Leader>dc", ":FzfLua dap_commands<CR>",                                                        desc = "DAP commands" },
+      { "<Leader>df", ":FzfLua dap_frames<CR>",                                                          desc = "Active session jump to frame" },
+      { "<Leader>do", ":FzfLua dap_configurations<CR>",                                                  desc = "DAP configurations" },
+      { "<Leader>dv", ":FzfLua dap_variables<CR>",                                                       desc = "Active session variables" },
+      { "<M-k>",      function() require("dapui").eval() end,                                            desc = "Evaluate expression", mode = { "n", "v" } },
+      { "<F5>",       function() require("dap").continue() end,                                          desc = "Debug: start / continue" },
+      { "<F10>",      function() require("dap").step_over() end,                                         desc = "Debug: step over" },
+      { "<F11>",      function() require("dap").step_into() end,                                         desc = "Debug: step into" },
+      { "<F12>",      function() require("dap").step_out() end,                                          desc = "Debug: step out" },
     },
 
     {
