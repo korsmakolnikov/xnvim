@@ -12,6 +12,7 @@ cmp.setup({
   },
   mapping = require("config.bindings").cmp(),
   sources = cmp.config.sources({
+    { name = 'lazydev', group_index = 0 },
     { name = 'nvim_lsp' },
     { name = 'treesitter' },
     { name = 'luasnip' },

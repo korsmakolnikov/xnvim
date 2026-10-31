@@ -29,6 +29,7 @@ require('mason-tool-installer').setup {
     'dockerfile-language-server',
     'dot-language-server',
     'graphql-language-service-cli',
+    'intelephense',
     'jq',
     'jq-lsp',
     'jsonlint',
@@ -74,4 +75,9 @@ require('mason-tool-installer').setup {
   -- effect when running manually via ':MasonToolsInstall' etc....
   -- Default: nil
   debounce_hours = 5, -- at least 5 hours between attempts to install/update
+
+  -- the list uses mason package names, so mason-lspconfig is not needed
+  integrations = {
+    ['mason-lspconfig'] = false,
+  },
 }

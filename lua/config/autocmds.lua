@@ -1,9 +1,24 @@
-local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
-local function _1_()
-  return require("go.format").goimport()
-end
+-- Code actions applied on save, before formatting, by server name
+local actions_on_save = {
+  gopls = "source.organizeImports",
+}
 
-vim.api.nvim_create_autocmd("BufWritePre", { callback = _1_, group = format_sync_grp, pattern = "*.go" })
+local function apply_code_action(client, buf, kind)
+  local params = {
+    textDocument = vim.lsp.util.make_text_document_params(buf),
+    range = {
+      start = { line = 0, character = 0 },
+      ["end"] = { line = vim.api.nvim_buf_line_count(buf), character = 0 },
+    },
+    context = { only = { kind }, diagnostics = {} },
+  }
+  local response = client:request_sync("textDocument/codeAction", params, 3000, buf)
+  for _, action in ipairs(response and response.result or {}) do
+    if action.edit then
+      vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
+    end
+  end
+end
 
 local lsp_format_group = vim.api.nvim_create_augroup('my.lsp.format', { clear = true })
 
@@ -22,6 +37,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
       buffer = args.buf,
       desc = 'Format the buffer with any LSP client advertising textDocument/formatting',
       callback = function()
+        for _, client in ipairs(vim.lsp.get_clients({ bufnr = args.buf })) do
+          local kind = actions_on_save[client.name]
+          if kind and client:supports_method('textDocument/codeAction', args.buf) then
+            apply_code_action(client, args.buf, kind)
+          end
+        end
         vim.lsp.buf.format({
           bufnr = args.buf,
           timeout_ms = 5000,

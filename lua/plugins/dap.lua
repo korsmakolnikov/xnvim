@@ -7,7 +7,6 @@ return {
       "theHamsta/nvim-dap-virtual-text",
       "leoluz/nvim-dap-go",
       "mfussenegger/nvim-dap-python",
-      "mxsdev/nvim-dap-vscode-js",
     },
     config = function()
       require "coding.dap"
