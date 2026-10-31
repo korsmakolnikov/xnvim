@@ -317,7 +317,6 @@ function M.setup()
     {
       group = "+Snippets",
       mode = { "i", "s" },
-      { "<C-K>",   function() require("luasnip").expand() end,  desc = "Expand snippet", mode = "i" },
       { "<C-L>",   function() require("luasnip").jump(1) end,   desc = "Next snippet node" },
       { "<C-J>",   function() require("luasnip").jump(-1) end,  desc = "Previous snippet node" },
       {
