@@ -10,6 +10,10 @@ local servers = {
     filetypes = { "python" },
     root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "pyrightconfig.json", ".git" },
     before_init = function(_, config)
+      -- a single file outside any project has no root
+      if not config.root_dir then
+        return
+      end
       local venv = config.root_dir .. "/.venv/bin/python"
       if vim.fn.executable(venv) == 1 then
         config.settings.python.pythonPath = venv
