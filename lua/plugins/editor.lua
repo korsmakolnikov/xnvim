@@ -28,6 +28,8 @@ return {
       })
     end
   },
+  -- uses the system fzf binary
+  "ibhagwan/fzf-lua",
   {
     "stevearc/oil.nvim",
     dependencies = { "SirZenith/oil-vcs-status" },
