@@ -22,11 +22,14 @@ require('mason-tool-installer').setup {
     -- you can turn off/on auto_update per tool
     -- { 'bash-language-server', auto_update = true },
     'bash-debug-adapter',
+    'codelldb',
+    'debugpy',
     'bash-language-server',
     'docker-compose-language-service',
     'dockerfile-language-server',
     'dot-language-server',
     'graphql-language-service-cli',
+    'intelephense',
     'jq',
     'jq-lsp',
     'jsonlint',
@@ -35,6 +38,8 @@ require('mason-tool-installer').setup {
     'luacheck',
     'luaformatter',
     'lua-language-server',
+    'pyright',
+    'ruff',
     'shellcheck',
     'shfmt',
     'stylua',
@@ -70,4 +75,9 @@ require('mason-tool-installer').setup {
   -- effect when running manually via ':MasonToolsInstall' etc....
   -- Default: nil
   debounce_hours = 5, -- at least 5 hours between attempts to install/update
+
+  -- the list uses mason package names, so mason-lspconfig is not needed
+  integrations = {
+    ['mason-lspconfig'] = false,
+  },
 }

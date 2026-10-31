@@ -1,8 +1,18 @@
 -- Format on save and inlay hints are wired per-buffer from the LspAttach
--- handler in `lua/autogroups.lua`, which only enables each feature for clients
--- that actually advertise the matching capability.
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- handler in `lua/config/autocmds.lua`, which only enables each feature for
+-- clients that actually advertise the matching capability.
+-- Servers for other machines go in lua/config/local.lua (see the README).
+
+-- cmp_nvim_lsp adds what the completion menu supports, such as snippets
+local capabilities = vim.tbl_deep_extend("force",
+  vim.lsp.protocol.make_client_capabilities(),
+  require("cmp_nvim_lsp").default_capabilities())
 capabilities.general.positionEncodings = { "utf-16" }
+
+-- Diagnostics of the cursor line drawn as lines below it
+vim.diagnostic.config({
+  virtual_lines = { current_line = true },
+})
 
 local servers = {
   pyright = {
@@ -10,15 +20,24 @@ local servers = {
     filetypes = { "python" },
     root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "pyrightconfig.json", ".git" },
     before_init = function(_, config)
+      -- a single file outside any project has no root
+      if not config.root_dir then
+        return
+      end
       local venv = config.root_dir .. "/.venv/bin/python"
       if vim.fn.executable(venv) == 1 then
         config.settings.python.pythonPath = venv
       end
     end,
     settings = {
+      -- ruff sorts the imports
+      pyright = {
+        disableOrganizeImports = true,
+      },
       python = {
         analysis = {
-          typeCheckingMode = "strict",
+          -- a project asks for strict in its pyrightconfig.json
+          typeCheckingMode = "standard",
         }
       }
     }
@@ -27,6 +46,10 @@ local servers = {
     cmd = { "ruff", "server" },
     filetypes = { "python" },
     root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
+    on_attach = function(client)
+      -- pyright answers the hover with the types and the docs
+      client.server_capabilities.hoverProvider = false
+    end,
   },
   gopls = {
     cmd = { "gopls" },
@@ -60,19 +83,15 @@ local servers = {
     root_markers = { "compile_commands.json", "compile_flags.txt", ".git" },
   },
   jsonls = {
-    cmd = { "vscode-json-languageserver", "--stdio" },
+    cmd = { "vscode-json-language-server", "--stdio" },
     filetypes = { "json", "avsc" },
     root_markers = { ".git" },
   },
+  -- lazydev.nvim gives it the Neovim API and the plugins in the config
   lua_ls = {
     cmd = { "lua-language-server" },
     filetypes = { "lua" },
     root_markers = { ".git" },
-    settings = {
-      Lua = {
-        diagnostics = { globals = { "vim" } },
-      },
-    },
   },
   bashls = {
     cmd = { "bash-language-server", "start" },
@@ -89,25 +108,14 @@ local servers = {
     filetypes = { "markdown" },
     root_markers = { ".git" },
   },
-  ts_ls = {
-    cmd = { "typescript-language-server", "--stdio" },
-    filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-    root_markers = { "package.json", "tsconfig.json", ".git" },
-  },
   cmake = {
     cmd = { "cmake-language-server" },
     filetypes = { "cmake" },
     root_markers = { "CMakeLists.txt", ".git" },
   },
-  tilt_ls = {
-    cmd = { "tilt_ls" },
-    -- in alternativa, se hai solo tilt installato:
-    -- cmd = { "tilt", "ls", "serve", "--lsp" },
-    filetypes = { "tiltfile" },
-    root_markers = { "Tiltfile", ".git" },
-  },
+  -- installed by mason; the licence key is read from ~/intelephense/licence.txt
   intelephense = {
-    cmd = { "intelephense", "--stdio" }, -- assicurati che il binario sia nel PATH
+    cmd = { "intelephense", "--stdio" },
     filetypes = { "php" },
     root_markers = { ".git", "composer.json" },
     flags = {
@@ -146,34 +154,21 @@ local servers = {
         cargo = {
           allFeatures = true,
         },
-        checkOnSave = {
+        check = {
           command = "clippy",
         },
         diagnostics = {
           enable = true,
           disabled = { "unresolved-proc-macro" },
         },
-        assist = {
-          importGranularity = "module",
-          importPrefix = "by_self",
+        imports = {
+          granularity = {
+            group = "module",
+          },
+          prefix = "self",
         },
-        -- inlayHints = {
-        --   bindingModeHints = true,
-        --   chainingHints = true,
-        --   closingBraceHints = {
-        --     enable = true,
-        --     minLines = 25,
-        --   },
-        --   parameterHints = true,
-        --   typeHints = true,
-        -- },
       },
     },
-  },
-  elm = {
-    cmd = { "elm-language-server" },
-    filetypes = { "elm" },
-    root_markers = { "elm.json", ".git" },
   },
 }
 
@@ -189,26 +184,4 @@ for name, opts in pairs(servers) do
   vim.lsp.enable(name)
 end
 
-require('go').setup({
-  -- go.nvim would otherwise call `vim.lsp.inlay_hint.enable(true)` globally,
-  -- turning hints on for every buffer regardless of filetype or client support.
-  -- Inlay hints are wired per-buffer from the LspAttach handler in
-  -- `lua/autogroups.lua` instead.
-  lsp_inlay_hints = {
-    enable = false,
-  },
-})
-
-vim.lsp.config('dexter', {
-  cmd = { 'dexter', 'lsp' },
-  root_markers = { '.dexter/dexter.db', '.dexter.db', '.git', 'mix.exs' },
-  filetypes = { 'elixir', 'eelixir', 'heex' },
-  init_options = {
-    followDelegates = true, -- jump through defdelegate to the target function
-    -- stdlibPath = "",      -- override Elixir stdlib path (auto-detected)
-    -- debug = false,        -- verbose logging to stderr (view with :LspLog)
-  },
-})
-
-vim.lsp.enable 'dexter'
-require 'coding.custom_formatters'.init()
+require 'coding.formatters'.init()

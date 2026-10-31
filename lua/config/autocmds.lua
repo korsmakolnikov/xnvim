@@ -1,13 +1,24 @@
-local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
-local function _1_()
-  return require("go.format").goimport()
-end
+-- Code actions applied on save, before formatting, by server name
+local actions_on_save = {
+  gopls = "source.organizeImports",
+}
 
-vim.api.nvim_create_autocmd("BufWritePre", { callback = _1_, group = format_sync_grp, pattern = "*.go" })
-vim.api.nvim_create_autocmd("BufEnter",
-  { command = ":set autoindent noexpandtab tabstop=4 shiftwidth=4", pattern = { "*.rs", "*.s", "*.asm", "*.php", "*.py" } })
-vim.api.nvim_create_autocmd("BufEnter",
-  { command = ":set autoindent noexpandtab tabstop=8 shiftwidth=8", pattern = { "*.c", "*.h", "*.cpp", "*.hpp", "*.go" } })
+local function apply_code_action(client, buf, kind)
+  local params = {
+    textDocument = vim.lsp.util.make_text_document_params(buf),
+    range = {
+      start = { line = 0, character = 0 },
+      ["end"] = { line = vim.api.nvim_buf_line_count(buf), character = 0 },
+    },
+    context = { only = { kind }, diagnostics = {} },
+  }
+  local response = client:request_sync("textDocument/codeAction", params, 3000, buf)
+  for _, action in ipairs(response and response.result or {}) do
+    if action.edit then
+      vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
+    end
+  end
+end
 
 local lsp_format_group = vim.api.nvim_create_augroup('my.lsp.format', { clear = true })
 
@@ -26,6 +37,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
       buffer = args.buf,
       desc = 'Format the buffer with any LSP client advertising textDocument/formatting',
       callback = function()
+        for _, client in ipairs(vim.lsp.get_clients({ bufnr = args.buf })) do
+          local kind = actions_on_save[client.name]
+          if kind and client:supports_method('textDocument/codeAction', args.buf) then
+            apply_code_action(client, args.buf, kind)
+          end
+        end
         vim.lsp.buf.format({
           bufnr = args.buf,
           timeout_ms = 5000,
@@ -70,19 +87,18 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 
-local format_group = vim.api.nvim_create_augroup("AutoRetabPython", { clear = true })
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-  group = format_group,
-  pattern = "*.py", -- Si attiva SOLO sui file Python
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.md,*.vpc,*.txt",
   callback = function()
-    -- Assicurati che expandtab sia attivo per il buffer corrente
-    vim.opt_local.expandtab = true
-    vim.opt_local.tabstop = 4
-    vim.opt_local.shiftwidth = 4
-
-    -- Esegue il retab silenziosamente prima di salvare
-    vim.cmd("retab")
+    vim.opt_local.spell = true
+    vim.opt_local.spelllang = { "en_us", "it" }
+    vim.opt_local.textwidth = 80
   end,
-  desc = "Converte automaticamente i tab in spazi salvando file Python",
+})
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.vp",
+  callback = function(args)
+    require("visual.presentation").start(args.buf)
+  end,
 })
