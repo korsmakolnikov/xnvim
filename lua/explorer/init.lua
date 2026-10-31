@@ -17,7 +17,7 @@ require('oil').setup({
   }
 })
 
-require "oil_vcs"
+require "explorer.vcs"
 
 local oil_manager = {}
 

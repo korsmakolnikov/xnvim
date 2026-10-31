@@ -44,7 +44,6 @@ dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
 
 require("dapui").setup()
-vim.keymap.set("n", "<M-k>", require 'dapui'.eval, { buffer = bufnr })
 dap.listeners.after.event_initialized["dapui_config"] = function()
   require 'dapui'.open()
 end

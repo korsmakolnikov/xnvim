@@ -65,3 +65,19 @@ vim.api.nvim_create_autocmd("FileType", {
   desc = "Enable Tree-sitter highlighting whenever a parser is available",
 })
 
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.md,*.vpc,*.txt",
+  callback = function()
+    vim.opt_local.spell = true
+    vim.opt_local.spelllang = { "en_us", "it" }
+    vim.opt_local.textwidth = 80
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.vp",
+  callback = function(args)
+    require("visual.presentation").start(args.buf)
+  end,
+})

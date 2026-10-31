@@ -201,4 +201,4 @@ vim.lsp.config('dexter', {
 })
 
 vim.lsp.enable 'dexter'
-require 'coding.custom_formatters'.init()
+require 'coding.formatters'.init()

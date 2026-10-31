@@ -58,3 +58,9 @@ if vim.fn.has('wsl') == 1 then
 end
 
 vim.g.goyo_width = '80'
+
+if vim.g.neovide then
+  vim.g.neovide_fullscreen = true
+  vim.g.neovide_cursor_vfx_mode = "railgun"
+  opt.guifont = 'Fira Code Font:h14,Symbols Nerd Font'
+end

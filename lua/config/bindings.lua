@@ -1,16 +1,14 @@
-local gs = require('gitsigns')
-local wk = require("which-key")
-local ts = require("telescope.builtin")
-local dap = {
-  toggle_breakpoint = function()
-  end,
-  continue = function()
-  end
-}
+-- Every key binding of the configuration lives here, so collisions show up in
+-- one place. `setup` registers the global bindings through which-key; the
+-- other functions hold the bindings owned by a plugin or by a buffer.
+local M = {}
 
-wk.add(
-  {
+function M.setup()
+  local gs = require('gitsigns')
+  local wk = require("which-key")
+  local ts = require("telescope.builtin")
 
+  wk.add({
     {
       "<C-c>",
       group = "+Cursor",
@@ -30,8 +28,8 @@ wk.add(
       { "<C-c>v", ":FzfLua grep_visual<CR>",     desc = "Grep selected",         mode = "v" },
       { "<C-c>W", ":FzfLua grep_cWORD<CR>",      desc = "Grep WORD under cursor" },
       { "<C-c>w", ":FzfLua grep_cword<CR>",      desc = "Grep word under cursor" },
-      { "<C-c>t", ":FzfLua tags_grep_cWORD<CR>", desc = "Grep WORD under cursor" },
-      { "<C-c>T", ":FzfLua tags_grep_cword<CR>", desc = "Grep word under cursor" },
+      { "<C-c>t", ":FzfLua tags_grep_cWORD<CR>", desc = "Grep tags for WORD under cursor" },
+      { "<C-c>T", ":FzfLua tags_grep_cword<CR>", desc = "Grep tags for word under cursor" },
       {
         "<C-c>h",
         group = "+Coding helpers",
@@ -52,8 +50,8 @@ wk.add(
         { "<C-c>cD", "<cmd>lua vim.lsp.buf.declaration()<CR>",    desc = "Jump to declaration" },
         { "<C-c>cd", "<cmd>lua vim.lsp.buf.definition()<CR>",     desc = "Jump to definition" },
         { "<C-c>ci", "<cmd>lua vim.lsp.buf.implementation()<CR>", desc = "Jump to implementation" },
-        { "<C-c>cn", ":lua vim.diagnostic.goto_next()<CR>",       desc = "Next error" },
-        { "<C-c>cp", ":lua vim.diagnostic.goto_prev()<CR>",       desc = "Previous error" },
+        { "<C-c>cn", function() vim.diagnostic.jump({ count = 1, float = true }) end,  desc = "Next error" },
+        { "<C-c>cp", function() vim.diagnostic.jump({ count = -1, float = true }) end, desc = "Previous error" },
       },
     },
 
@@ -70,8 +68,8 @@ wk.add(
       { "<Leader>fg",       ts.git_files,                                               desc = "Search for git files", },
       { "<Leader>fh",       ts.oldfiles,                                                desc = "History", },
       { "<Leader>fy",       ":let @+=@%<CR>",                                           desc = "Yank file path" },
-      { "<Leader>fC",       ":lua require'oil_manager'.toggle_on_current_folder()<CR>", desc = "Oil current directory" },
-      { "<Leader>fc",       ":lua require'oil_manager'.toggle_on_root_folder()<CR>",    desc = "Oil" },
+      { "<Leader>fC",       ":lua require'explorer'.toggle_on_current_folder()<CR>", desc = "Oil current directory" },
+      { "<Leader>fc",       ":lua require'explorer'.toggle_on_root_folder()<CR>",    desc = "Oil" },
     },
 
     {
@@ -109,7 +107,7 @@ wk.add(
       { "<Leader>bl",       ":FzfLua blines<CR>",                              desc = "Find better lines" },
       { "<Leader>bL",       ":FzfLua lines<CR>",                               desc = "Find lines" },
       { "<Leader>bt",       ":FzfLua tabs<CR>",                                desc = "Find tabs" },
-      { "<Leader>bF",       ":lua vim.lsp.buf.formatting_sync(nil, 5001)<CR>", desc = "Format" },
+      { "<Leader>bF",       function() vim.lsp.buf.format({ timeout_ms = 5000 }) end, desc = "Format" },
       { "<Leader>bT",       ts.current_buffer_tags,                            desc = "Fuzzy find tags", },
       { "<Leader>bs",       ts.lsp_document_symbols,                           desc = "Symbols", },
       { "<Leader>bf",       ts.current_buffer_fuzzy_find,                      desc = "Fuzzy finder" },
@@ -117,8 +115,8 @@ wk.add(
       { "<Leader>bg",       ":FzfLua grep_curbuf<CR>",                         desc = "Grep current buffer" },
       {
         group = "+Buffer Nav",
-        { "<S-Tab>", ":bp<CR>", desc = "Previous tab" },
-        { "<Tab>",   ":bn<CR>", desc = "Next tab" },
+        { "<S-Tab>", ":bp<CR>", desc = "Previous buffer" },
+        { "<Tab>",   ":bn<CR>", desc = "Next buffer" },
       },
     },
 
@@ -144,13 +142,13 @@ wk.add(
       { "<Leader>tc", ":tabclose<CR>",     desc = "Close the current tab" },
       { "<Leader>te", ":tabedit<CR>",      desc = "Open empty file in a new tab" },
       { "<Leader>tn", ":tabnext<CR>",      desc = "Next tab" },
-      { "<Leader>tp", ":tabprevious<CR>",  desc = "Next tab" },
+      { "<Leader>tp", ":tabprevious<CR>",  desc = "Previous tab" },
       { "<Leader>tr", ":tabmove +1<CR>",   desc = "Move to the right" },
       { "<Leader>tl", ":tabmove -1<CR>",   desc = "Move to the left" },
       { "<Leader>tF", ":tabfirst<CR>",     desc = "Switch to first tab" },
       { "<Leader>tL", ":tablast<CR>",      desc = "Switch to last tab" },
-      { "<Leader>tR", ":Tabby rename_tab", desc = "Rename tab" },
-      { "<Leader>tO", ":tabonly",          desc = "Close other tabs" },
+      { "<Leader>tR", ":Tabby rename_tab ", desc = "Rename tab" },
+      { "<Leader>tO", ":tabonly<CR>",      desc = "Close other tabs" },
     },
 
     {
@@ -178,28 +176,35 @@ wk.add(
     {
       "<Leader>d",
       group = "+Debug",
-      { "<Leader>dB", dap.toggle_breakpoint(),             desc = "Toggle breakpoint" },
-      { "<Leader>dC", dap.continue(),                      desc = "Dap continue" },
+      { "<Leader>dB", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
+      { "<Leader>dC", function() require("dap").continue() end,          desc = "Dap continue" },
       { "<Leader>dR", ":lua require'dap'.repl.open()<CR>", desc = "REPL" },
       { "<Leader>db", ":FzfLua dap_breakpoints<CR>",       desc = "List breakpoints" },
       { "<Leader>dc", ":FzfLua dap_commands<CR>",          desc = "DAP commands" },
       { "<Leader>df", ":FzfLua dap_frames<CR>",            desc = "Active session jump to frame" },
       { "<Leader>do", ":FzfLua dap_configurations<CR>",    desc = "DAP configurations" },
-      { "<Leader>dv", ":FzfLua dap_variables<CR>",         desc = "Active session variables" }
+      { "<Leader>dv", ":FzfLua dap_variables<CR>",         desc = "Active session variables" },
+      { "<M-k>",      function() require("dapui").eval() end, desc = "Evaluate expression" },
     },
 
     {
       "<Leader>g",
       group = "+Git",
-      { "<Leader>gs", ts.git_status,          desc = "Stash" },
+      { "<Leader>gs", ts.git_status,          desc = "Status" },
       { "<Leader>gb", ts.git_branches,        desc = "Branches" },
       { "<Leader>gc", ts.git_commits,         desc = "Commits project" },
-      { "<Leader>gS", ts.git_stash,           desc = "Commits project" },
+      { "<Leader>gS", ts.git_stash,           desc = "Stash" },
       { "<Leader>gt", ":FzfLua git_tags<CR>", desc = "Tags" },
       {
         "<Leader>gy",
         "<cmd>lua require'gitlinker'.get_buf_range_url('n', {action_callback = require'gitlinker.actions'.open_in_browser})<cr>",
         desc = "Gitlinker"
+      },
+      {
+        "<Leader>gy",
+        "<cmd>lua require'gitlinker'.get_buf_range_url('v', {action_callback = require'gitlinker.actions'.open_in_browser})<cr>",
+        desc = "Gitlinker",
+        mode = "v"
       },
     },
 
@@ -253,7 +258,7 @@ wk.add(
     {
       "<Leader>m",
       group = "+Fzf Misc",
-      { "?",          ":FzfLua man_pages<CR>",       desc = "Man pages" },
+      { "<Leader>m?", ":FzfLua man_pages<CR>",       desc = "Man pages" },
       { "<Leader>mH", ":FzfLua command_history<CR>", desc = "Commands history" },
       { "<Leader>ma", ":FzfLua autocmds<CR>",        desc = "Autocommands" },
       { "<Leader>mb", ":FzfLua builtin<CR>",         desc = "Fzf-lua builtin commands" },
@@ -280,8 +285,90 @@ wk.add(
       "<Leader>e",
       group = "+Trouble",
       { "<Leader>e<Space>", "<cmd>Trouble diagnostics toggle focus=false filter.buf=0 win.position=top<CR>", desc = "Trouble diagnostics buffer" },
-      { "<Leader>ew",       "<cmd>Trouble diagnostics toggle focus=false win.position=top<CR>",              desc = "Trouble diagnostics buffer" },
+      { "<Leader>ew",       "<cmd>Trouble diagnostics toggle focus=false win.position=top<CR>",              desc = "Trouble diagnostics workspace" },
       { "<Leader>em",       "<cmd>Trouble<CR>",                                                              desc = "Trouble menu" },
-    }
-  }
-)
+    },
+
+    {
+      group = "+Snippets",
+      mode = { "i", "s" },
+      { "<C-K>",   function() require("luasnip").expand() end,  desc = "Expand snippet", mode = "i" },
+      { "<C-L>",   function() require("luasnip").jump(1) end,   desc = "Next snippet node" },
+      { "<C-J>",   function() require("luasnip").jump(-1) end,  desc = "Previous snippet node" },
+      {
+        "<C-E>",
+        function()
+          local ls = require("luasnip")
+          if ls.choice_active() then
+            ls.change_choice(1)
+          end
+        end,
+        desc = "Next snippet choice"
+      },
+      { "<C-S-E>", function() require("luasnip.loaders").edit_snippet_files() end, desc = "Edit snippet files" },
+    },
+  })
+
+  if vim.g.neovide then
+    vim.keymap.set({ "i", "c" }, "<C-S-v>", "<C-R>+", { desc = "Paste from the system clipboard" })
+  end
+end
+
+-- Insert-mode bindings of the completion menu, for cmp.setup.
+function M.cmp()
+  local cmp = require("cmp")
+  local luasnip = require("luasnip")
+  return cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    -- falls back to the snippet choice binding when the menu is closed
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        if luasnip.expandable() then
+          luasnip.expand()
+        else
+          cmp.confirm({
+            select = true,
+          })
+        end
+      else
+        fallback()
+      end
+    end),
+
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.locally_jumpable(1) then
+        luasnip.jump(1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.locally_jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+  })
+end
+
+-- Command-line bindings of the completion menu.
+function M.cmp_cmdline()
+  return require("cmp").mapping.preset.cmdline()
+end
+
+-- Slide navigation of the presenting mode, local to the slides buffer.
+function M.presentation(buf)
+  vim.keymap.set('n', '<Right>', ':bn<CR>', { buffer = buf, silent = true, desc = "Next slide" })
+  vim.keymap.set('n', '<Left>', ':bp<CR>', { buffer = buf, silent = true, desc = "Previous slide" })
+end
+
+return M

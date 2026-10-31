@@ -5,8 +5,9 @@ return {
     opts = {
       preset = "modern"
     },
-    config = function()
-      require "bindings"
+    config = function(_, opts)
+      require("which-key").setup(opts)
+      require("config.bindings").setup()
     end
   },
   {
@@ -39,13 +40,7 @@ return {
     "stevearc/oil.nvim",
     dependencies = { "SirZenith/oil-vcs-status" },
     config = function()
-      require "oil_manager"
-    end
-  },
-  {
-    "terrortylor/nvim-comment",
-    config = function()
-      require "nvim_comment".setup()
+      require "explorer"
     end
   },
   {
