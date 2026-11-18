@@ -21,6 +21,9 @@ return {
   },
   {
     "L3MON4D3/LuaSnip",
+    -- Loaded with nvim-cmp: at startup, cmp_luasnip would require cmp and load
+    -- it nested, skipping the after/plugin files that register its sources.
+    lazy = true,
     version = "v2.*",
     build = "make install_jsregexp",
     dependencies = { "saadparwaiz1/cmp_luasnip", "honza/vim-snippets" },
